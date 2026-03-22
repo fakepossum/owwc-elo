@@ -1,0 +1,454 @@
+Date,TeamA,TeamB,ScoreA,ScoreB
+2016-09-09,IRL,POL,1,2
+2016-09-09,IRL,ZAF,2,0
+2016-09-10,BCS,POL,2,0
+2016-09-10,DEU,IRL,2,0
+2016-09-11,BCS,ZAF,2,0
+2016-09-11,DEU,BCS,2,1
+2016-09-11,POL,ZAF,2,0
+2016-09-11,DEU,POL,2,0
+2016-09-11,BCS,IRL,2,0
+2016-09-11,DEU,ZAF,2,1
+2016-09-10,FIN,HUN,2,0
+2016-09-10,FIN,ISL,2,0
+2016-09-10,HUN,ISL,0,2
+2016-09-10,ISL,GBR,2,1
+2016-09-11,HUN,GBR,0,2
+2016-09-11,FIN,GRC,2,0
+2016-09-11,FIN,GBR,2,0
+2016-09-11,GRC,HUN,0,2
+2016-09-11,GRC,GBR,2,0
+2016-09-12,GRC,ISL,0,2
+2016-09-09,HRV,NOR,0,2
+2016-09-09,NOR,PRT,2,0
+2016-09-10,FRA,HRV,2,0
+2016-09-10,FRA,UKR,2,0
+2016-09-10,NOR,UKR,2,0
+2016-09-11,FRA,PRT,2,0
+2016-09-11,FRA,NOR,2,1
+2016-09-11,PRT,UKR,2,0
+2016-09-11,HRV,UKR,2,0
+2016-09-11,HRV,PRT,2,0
+2016-09-10,SVK,TUR,0,2
+2016-09-10,ROU,TUR,0,2
+2016-09-10,SWE,SVK,2,0
+2016-09-10,SWE,TUR,2,0
+2016-09-10,ROU,SVK,2,0
+2016-09-10,DNK,ROU,2,0
+2016-09-10,SWE,DNK,2,0
+2016-09-10,SWE,ROU,2,0
+2016-09-10,DNK,SVK,2,0
+2016-09-10,DNK,TUR,0,2
+2016-09-10,ITA,BGR,2,0
+2016-09-10,RUS,CHE,2,0
+2016-09-10,BGR,RUS,0,2
+2016-09-10,ITA,CHE,2,0
+2016-09-10,ISR,CHE,2,0
+2016-09-10,ISR,ITA,0,2
+2016-09-10,ISR,RUS,0,2
+2016-09-10,ITA,RUS,0,2
+2016-09-10,BGR,ISR,1,2
+2016-09-10,BGR,CHE,2,0
+2016-09-09,AUT,SRB,2,0
+2016-09-09,AUT,CZE,0,2
+2016-09-09,CZE,SRB,2,0
+2016-09-10,AUT,BEN,0,2
+2016-09-11,SRB,ESP,0,2
+2016-09-11,BEN,ESP,1,2
+2016-09-11,BEN,CZE,2,0
+2016-09-11,AUT,ESP,0,2
+2016-09-11,CZE,ESP,0,2
+2016-09-11,BEN,SRB,2,0
+2016-09-17,DEU,ISL,3,0
+2016-09-14,FIN,BEN,3,0
+2016-09-14,FRA,TUR,3,0
+2016-09-18,SWE,ITA,3,0
+2016-09-14,RUS,NOR,3,0
+2016-09-14,ESP,BCS,3,0
+2016-09-15,PER,ARG,0,2
+2016-09-16,CHL,ARG,2,0
+2016-09-17,PER,CHL,0,2
+2016-09-15,COL,CRI,2,1
+2016-09-16,CRI,MEX,0,2
+2016-09-17,COL,MEX,2,1
+2016-09-18,CHL,COL,3,0
+2016-09-12,IDN,TWN,0,2
+2016-09-15,TWN,VNM,3,2
+2016-09-16,IDN,VNM,0,2
+2016-09-13,JPN,HKG,2,0
+2016-09-15,JPN,THA,0,2
+2016-09-18,HKG,THA,0,2
+2016-09-14,PHL,SGP,0,2
+2016-09-15,PHL,MYS,0,2
+2016-09-16,SGP,MYS,2,0
+2016-10-29,Spain,Canada,2,1
+2016-10-29,Sweden,Brazil,2,0
+2016-10-30,Sweden,Canada,2,0
+2016-10-30,Spain,Brazil,2,0
+2016-10-31,Sweden,Spain,1,2
+2016-10-31,Canada,Brazil,2,0
+2016-10-29,United States,Chile,2,0
+2016-10-29,Russia,Germany,2,0
+2016-10-30,United States,Germany,2,0
+2016-10-30,Russia,Chile,2,0
+2016-10-31,United States,Russia,1,2
+2016-10-31,Germany,Chile,2,0
+2016-10-29,South Korea,Australia,2,0
+2016-10-29,Finland,Taiwan,2,1
+2016-10-30,South Korea,Taiwan,2,0
+2016-10-30,Finland,Australia,2,0
+2016-10-31,South Korea,Finland,2,0
+2016-10-31,Taiwan,Australia,0,2
+2016-10-29,China,Thailand,2,1
+2016-10-29,France,Singapore,2,0
+2016-10-30,China,Singapore,2,0
+2016-10-30,France,Thailand,1,2
+2016-10-31,China,France,1,2
+2016-10-31,Singapore,Thailand,0,2
+2016-11-04,Russia,France,2,1
+2016-11-04,Spain,Finland,1,2
+2016-11-04,South Korea,United States,2,0
+2016-11-04,China,Sweden,0,2
+2016-11-05,Russia,Finland,2,0
+2016-11-05,South Korea,Sweden,2,0
+2016-11-06,Russia,South Korea,0,4
+2016-11-06,Finland,Sweden,1,2
+2016-11-01,China,Thailand,1,0
+2016-11-01,China,France,1,0
+2016-11-01,Thailand,France,0,1
+2017-07-14,China,Romania,4,0
+2017-07-14,Hong Kong,Norway,1,3
+2017-07-15,China,Norway,4,0
+2017-07-15,Hong Kong,Romania,2,2
+2017-07-16,China,Hong Kong,4,0
+2017-07-16,Norway,Romania,4,0
+2017-07-14,France,Argentina,4,0
+2017-07-14,Denmark,Thailand,2,2
+2017-07-15,France,Thailand,3,1
+2017-07-15,Denmark,Argentina,3,1
+2017-07-16,France,Denmark,3,1
+2017-07-16,Thailand,Argentina,4,0
+2017-07-17,China,Thailand,3,0
+2017-07-17,France,Norway,3,0
+2017-07-21,Australia,Italy,4,0
+2017-07-21,Sweden,Portugal,2,2
+2017-07-22,Sweden,Italy,4,0
+2017-07-22,Australia,Portugal,4,0
+2017-07-23,Sweden,Australia,3,1
+2017-07-23,Italy,Portugal,0,4
+2017-07-21,Finland,Vietnam,4,0
+2017-07-21,Japan,Spain,3,1
+2017-07-22,Finland,Spain,0,4
+2017-07-22,Japan,Vietnam,4,0
+2017-07-23,Finland,Japan,2,2
+2017-07-23,Spain,Vietnam,4,0
+2017-07-24,Sweden,Spain,3,0
+2017-07-24,Japan,Australia,2,3
+2017-08-04,NLD,Poland,4,0
+2017-08-04,South Korea,Austria,4,0
+2017-08-05,South Korea,Poland,4,0
+2017-08-05,NLD,Austria,4,0
+2017-08-06,South Korea,NLD,4,0
+2017-08-06,Poland,Austria,4,0
+2017-08-04,Canada,Turkey,4,0
+2017-08-04,Russia,Singapore,4,0
+2017-08-05,Canada,Singapore,4,0
+2017-08-05,Russia,Turkey,4,0
+2017-08-06,Canada,Russia,2,2
+2017-08-06,Singapore,Turkey,2,2
+2017-08-06,Canada,Russia,1,0
+2017-08-07,South Korea,Russia,3,0
+2017-08-07,Canada,NLD,3,0
+2017-08-11,United States,New Zealand,4,0
+2017-08-11,Taiwan,Brazil,4,0
+2017-08-12,United States,Brazil,4,0
+2017-08-12,Taiwan,New Zealand,4,0
+2017-08-13,United States,Taiwan,3,1
+2017-08-13,Brazil,New Zealand,3,1
+2017-08-11,United Kingdom,BEL,4,0
+2017-08-11,Germany,Israel,3,2
+2017-08-12,United Kingdom,Israel,4,0
+2017-08-12,Germany,BEL,4,0
+2017-08-13,United Kingdom,Germany,4,0
+2017-08-13,Israel,BEL,3,1
+2017-08-14,United States,Germany,3,0
+2017-08-14,United Kingdom,Taiwan,3,0
+2017-11-03,United Kingdom,Sweden,0,3
+2017-11-03,Canada,Australia,3,2
+2017-11-03,China,France,1,3
+2017-11-03,South Korea,United States,4,2
+2017-11-04,Sweden,Canada,2,3
+2017-11-04,France,South Korea,1,3
+2017-11-05,Canada,South Korea,1,4
+2017-11-05,Sweden,France,4,2
+2018-08-17,Russia,Hong Kong,4,0
+2018-08-17,South Korea,Taiwan,4,0
+2018-08-17,Hong Kong,Finland,0,4
+2018-08-17,Russia,Japan,3,1
+2018-08-17,Finland,South Korea,2,3
+2018-08-18,Hong Kong,South Korea,0,4
+2018-08-18,Japan,Taiwan,3,1
+2018-08-18,Russia,Finland,1,2
+2018-08-18,Taiwan,Hong Kong,4,0
+2018-08-18,South Korea,Japan,4,0
+2018-08-19,Finland,Japan,4,0
+2018-08-19,Russia,Taiwan,4,0
+2018-08-19,Japan,Hong Kong,4,0
+2018-08-19,Russia,South Korea,0,4
+2018-08-19,Taiwan,Finland,0,4
+2018-09-07,Austria,Canada,0,4
+2018-09-07,Norway,Switzerland,3,1
+2018-09-07,Canada,Brazil,4,0
+2018-09-07,Austria,United States,0,4
+2018-09-07,Norway,Brazil,2,3
+2018-09-08,Switzerland,Austria,2,3
+2018-09-08,Brazil,United States,1,3
+2018-09-08,Norway,Canada,0,4
+2018-09-08,United States,Switzerland,4,0
+2018-09-08,Brazil,Austria,3,1
+2018-09-09,Norway,Austria,3,1
+2018-09-09,Canada,Switzerland,4,0
+2018-09-09,Norway,United States,0,4
+2018-09-09,Switzerland,Brazil,1,3
+2018-09-09,Canada,United States,1,3
+2018-09-14,Denmark,Thailand,3,1
+2018-09-14,Spain,Australia,1,3
+2018-09-14,China,Sweden,3,1
+2018-09-14,Spain,Denmark,1,2
+2018-09-14,Thailand,Australia,0,4
+2018-09-15,Australia,Denmark,1,3
+2018-09-15,China,Thailand,3,2
+2018-09-15,Sweden,Australia,0,4
+2018-09-15,Denmark,China,2,3
+2018-09-15,Spain,Sweden,0,4
+2018-09-16,Thailand,Sweden,1,3
+2018-09-16,Spain,China,0,4
+2018-09-16,Sweden,Denmark,3,2
+2018-09-16,Australia,China,2,3
+2018-09-16,Spain,Thailand,1,3
+2018-09-21,Netherlands,France,0,4
+2018-09-21,Germany,United Kingdom,1,3
+2018-09-21,Poland,Italy,2,3
+2018-09-21,Netherlands,Germany,3,1
+2018-09-21,Poland,United Kingdom,0,4
+2018-09-22,Germany,France,2,3
+2018-09-22,Italy,Netherlands,1,3
+2018-09-22,Poland,Germany,2,3
+2018-09-22,Italy,France,0,4
+2018-09-22,Netherlands,United Kingdom,0,4
+2018-09-23,Italy,Germany,1,3
+2018-09-23,Poland,France,0,4
+2018-09-23,Italy,United Kingdom,0,4
+2018-09-23,Poland,Netherlands,0,4
+2018-09-23,United Kingdom,France,0,4
+2018-11-02,United States,United Kingdom,1,3
+2018-11-02,South Korea,Australia,3,0
+2018-11-02,China,Finland,3,0
+2018-11-02,France,Canada,0,3
+2018-11-03,United Kingdom,South Korea,0,2
+2018-11-03,China,Canada,3,0
+2018-11-04,South Korea,China,4,0
+2018-11-04,United Kingdom,Canada,2,3
+2019-10-31,New Zealand,Austria,3,0
+2019-10-31,Australia,New Zealand,3,2
+2019-10-31,Denmark,Taiwan,3,1
+2019-10-31,Australia,Denmark,0,3
+2019-10-31,Iceland,Ireland,3,0
+2019-10-31,United Kingdom,Iceland,3,0
+2019-10-31,Norway,Spain,3,0
+2019-10-31,United Kingdom,Norway,3,0
+2019-10-31,Colombia,Philippines,3,1
+2019-10-31,Italy,India,3,0
+2019-10-31,Sweden,Colombia,3,0
+2019-10-31,Japan,Italy,2,3
+2019-10-31,Sweden,Italy,3,1
+2019-10-31,LVA,Mexico,0,3
+2019-10-31,Hong Kong,PRY,3,0
+2019-10-31,Russia,Mexico,3,0
+2019-10-31,Germany,Hong Kong,3,0
+2019-10-31,Russia,Germany,3,0
+2019-10-31,Singapore,South Africa,3,0
+2019-10-31,Portugal,KSA,1,3
+2019-10-31,Finland,Singapore,3,0
+2019-10-31,Netherlands,KSA,3,1
+2019-10-31,Finland,Netherlands,0,3
+2019-11-01,South Korea,United Kingdom,3,0
+2019-11-01,France,United States,0,3
+2019-11-01,United States,Sweden,3,0
+2019-11-01,South Korea,France,1,2
+2019-11-01,France,United Kingdom,2,1
+2019-11-01,South Korea,Sweden,3,0
+2019-11-01,France,Sweden,2,1
+2019-11-01,United States,United Kingdom,3,0
+2019-11-01,South Korea,United States,0,3
+2019-11-01,United Kingdom,Sweden,1,2
+2019-11-01,Canada,Russia,0,3
+2019-11-01,China,Denmark,3,0
+2019-11-01,China,Netherlands,2,1
+2019-11-01,Denmark,Russia,2,1
+2019-11-01,China,Russia,3,0
+2019-11-01,Canada,Netherlands,1,2
+2019-11-01,Denmark,Netherlands,2,1
+2019-11-01,Canada,China,0,3
+2019-11-01,Canada,Denmark,0,3
+2019-11-01,Russia,Netherlands,1,2
+2019-11-02,Denmark,South Korea,0,3
+2019-11-02,France,Netherlands,3,1
+2019-11-03,United States,South Korea,3,1
+2019-11-03,China,France,3,1
+2019-11-04,United States,China,3,0
+2019-11-04,South Korea,France,3,0
+2023-05-18,Ireland,Denmark,0,2
+2023-05-18,Denmark,Portugal,2,0
+2023-05-18,Portugal,Ireland,2,0
+2023-05-18,Iceland,Switzerland,2,0
+2023-05-18,Finland,Iceland,2,0
+2023-05-18,Switzerland,Finland,0,2
+2023-06-22,Belgium,United Kingdom,0,2
+2023-06-22,Italy,France,0,2
+2023-06-22,Netherlands,Spain,1,2
+2023-06-23,Belgium,Spain,0,2
+2023-06-23,France,Portugal,2,0
+2023-06-23,Italy,Netherlands,0,2
+2023-06-23,United Kingdom,Denmark,1,2
+2023-06-24,Portugal,United Kingdom,0,2
+2023-06-24,Denmark,Belgium,2,0
+2023-06-24,Netherlands,France,0,2
+2023-06-25,United Kingdom,Netherlands,2,1
+2023-06-25,Belgium,Portugal,2,0
+2023-06-25,Spain,Italy,1,2
+2023-06-25,Denmark,France,1,2
+2023-06-29,Portugal,Italy,0,2
+2023-06-29,Spain,Denmark,2,1
+2023-06-29,France,Belgium,2,0
+2023-06-30,Portugal,Denmark,0,2
+2023-06-30,Netherlands,Belgium,0,2
+2023-06-30,Italy,United Kingdom,0,2
+2023-06-30,France,Spain,1,2
+2023-07-01,Spain,United Kingdom,0,2
+2023-07-01,Netherlands,Portugal,2,0
+2023-07-01,Italy,Denmark,1,2
+2023-07-02,Denmark,Netherlands,0,2
+2023-07-02,Belgium,Italy,2,0
+2023-07-02,Spain,Portugal,2,0
+2023-07-02,United Kingdom,France,2,0
+2023-06-22,Poland,Turkey,0,2
+2023-06-22,Finland,KSA,1,2
+2023-06-22,Norway,Sweden,2,0
+2023-06-22,Iceland,Germany,0,2
+2023-06-23,Sweden,Finland,0,2
+2023-06-23,Norway,Germany,2,0
+2023-06-23,KSA,Iceland,2,0
+2023-06-24,Germany,Finland,0,2
+2023-06-24,Iceland,Norway,0,2
+2023-06-24,Poland,KSA,0,2
+2023-06-24,Turkey,Sweden,2,1
+2023-06-25,KSA,Turkey,2,0
+2023-06-25,Norway,Finland,0,2
+2023-06-25,Poland,Iceland,2,1
+2023-06-29,Norway,KSA,0,2
+2023-06-29,Turkey,Germany,0,2
+2023-06-29,Sweden,Poland,2,0
+2023-06-29,Finland,Iceland,2,0
+2023-06-30,Germany,Sweden,0,2
+2023-06-30,Finland,Poland,2,0
+2023-06-30,Iceland,Turkey,2,1
+2023-07-01,KSA,Germany,2,0
+2023-07-01,Poland,Norway,1,2
+2023-07-01,Turkey,Finland,0,2
+2023-07-01,Sweden,Iceland,2,0
+2023-07-02,Germany,Poland,2,1
+2023-07-02,Turkey,Norway,1,2
+2023-07-02,Sweden,KSA,0,2
+2023-06-24,Canada,United States,0,2
+2023-06-24,Costa Rica,Mexico,0,2
+2023-06-24,PRI,GTM,2,0
+2023-06-25,Mexico,United States,1,2
+2023-06-25,GTM,Costa Rica,0,2
+2023-06-26,United States,PRI,2,0
+2023-06-26,Mexico,GTM,2,0
+2023-06-26,Costa Rica,Canada,0,2
+2023-07-01,PRI,Canada,0,2
+2023-07-01,Costa Rica,United States,0,2
+2023-07-02,United States,GTM,2,0
+2023-07-02,PRI,Costa Rica,2,0
+2023-07-02,Canada,Mexico,2,0
+2023-07-03,GTM,Canada,0,2
+2023-07-03,Mexico,PRI,2,1
+2023-06-23,Colombia,Peru,2,0
+2023-06-23,Chile,Brazil,0,2
+2023-06-24,Ecuador,Colombia,0,2
+2023-06-24,Peru,Chile,0,2
+2023-06-24,Argentina,Brazil,0,2
+2023-06-25,Brazil,Ecuador,2,0
+2023-06-25,Peru,Argentina,2,1
+2023-06-30,Peru,Brazil,0,2
+2023-06-30,Chile,Ecuador,2,0
+2023-06-30,Colombia,Argentina,2,0
+2023-07-01,Argentina,Ecuador,2,0
+2023-07-01,Colombia,Chile,2,1
+2023-07-02,Ecuador,Peru,0,2
+2023-07-02,Brazil,Colombia,0,2
+2023-07-02,Chile,Argentina,2,1
+2023-06-23,Philippines,Japan,0,2
+2023-06-23,Hong Kong,Indonesia,2,0
+2023-06-23,South Korea,Taiwan,2,0
+2023-06-24,Hong Kong,Philippines,2,0
+2023-06-24,Taiwan,Japan,0,2
+2023-06-25,Indonesia,Japan,0,2
+2023-06-25,South Korea,Hong Kong,2,0
+2023-06-30,Indonesia,Taiwan,0,2
+2023-06-30,Philippines,South Korea,0,2
+2023-07-01,Indonesia,South Korea,0,2
+2023-07-01,Taiwan,Philippines,2,0
+2023-07-01,Japan,Hong Kong,2,0
+2023-07-02,Hong Kong,Taiwan,2,0
+2023-07-02,Philippines,Indonesia,0,2
+2023-07-02,Japan,South Korea,0,2
+2023-06-23,Singapore,Malaysia,1,2
+2023-06-23,New Zealand,Thailand,0,2
+2023-06-24,Thailand,Australia,1,2
+2023-06-24,Malaysia,India,0,2
+2023-06-24,Singapore,New Zealand,0,2
+2023-06-25,New Zealand,India,0,2
+2023-06-25,Australia,Singapore,2,0
+2023-06-25,Malaysia,Thailand,0,2
+2023-06-30,India,Australia,0,2
+2023-06-30,Malaysia,New Zealand,0,2
+2023-06-30,Thailand,Singapore,2,0
+2023-07-01,Australia,Malaysia,2,0
+2023-07-01,India,Thailand,1,2
+2023-07-02,Singapore,India,1,2
+2023-07-02,New Zealand,Australia,0,2
+2023-10-29,Finland,Mexico,2,0
+2023-10-29,Colombia,South Korea,0,2
+2023-10-29,United Kingdom,Canada,2,0
+2023-10-29,Brazil,Australia,0,2
+2023-10-29,Thailand,Hong Kong,2,0
+2023-10-29,France,Japan,0,2
+2023-10-30,Mexico,Colombia,1,2
+2023-10-30,Canada,Australia,2,0
+2023-10-30,Thailand,Spain,0,2
+2023-10-30,Hong Kong,China,0,2
+2023-10-30,Japan,KSA,0,2
+2023-10-30,France,United States,1,2
+2023-10-31,Finland,Colombia,2,0
+2023-10-31,Mexico,South Korea,0,2
+2023-10-31,Canada,Brazil,2,0
+2023-10-31,Australia,United Kingdom,0,2
+2023-10-31,Spain,China,0,2
+2023-10-31,KSA,United States,2,0
+2023-11-01,South Korea,Finland,2,1
+2023-11-01,Brazil,United Kingdom,0,2
+2023-11-01,Hong Kong,Spain,0,2
+2023-11-01,China,Thailand,2,0
+2023-11-01,France,KSA,0,2
+2023-11-01,United States,Japan,2,0
+2023-11-03,South Korea,Canada,3,1
+2023-11-03,China,United States,3,0
+2023-11-03,United Kingdom,Finland,0,3
+2023-11-03,KSA,Spain,3,0
+2023-11-04,South Korea,China,2,3
+2023-11-04,Finland,KSA,2,3
+2023-11-05,China,KSA,2,3
+2023-11-05,South Korea,Finland,2,3
