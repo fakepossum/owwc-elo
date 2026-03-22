@@ -156,9 +156,9 @@ with col1:
     use_container_width=True, 
     hide_index=True,
     column_config={
-        "Elo": st.column_config.NumberColumn(
-            "Elo",
-            help="Current Elo Rating",
+        "ELO": st.column_config.NumberColumn(
+            "ELO",
+            help="Current ELO Rating",
             format="%.1f",  # This forces exactly 1 decimal place (e.g., 1500.0)
         ),
         "Team": st.column_config.TextColumn(
