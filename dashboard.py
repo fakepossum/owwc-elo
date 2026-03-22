@@ -19,7 +19,9 @@ TEAM_NAMES = {
     'THA': 'Thailand', 'AUS': 'Australia', 'ESP': 'Spain',
     'COL': 'Colombia', 'DNK': 'Denmark', 'NOR': 'Norway',
     'RUS': 'Russia', 'SWE': 'Sweden', 'BRA': 'Brazil',
-    'HKG': 'Hong Kong', 'ISL': 'Iceland', 'MEX': 'Mexico'
+    'HKG': 'Hong Kong', 'ISL': 'Iceland', 'MEX': 'Mexico',
+    'GTM': 'Guatemala', 'IND': 'India', 'LVA': 'Latvia',
+    'PRY': 'Paraguay', 'PRI': 'Puerto Rico', 'ECU': 'Ecuador'
 }
 
 FLAGS = {
@@ -29,7 +31,11 @@ FLAGS = {
     'Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
     'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸',
     'Russia': '🇷🇺', 'Sweden': '🇸🇪', 'Brazil': '🇧🇷',
-    'Hong Kong': '🇭🇰', 'Iceland': '🇮🇸', 'Mexico': '🇲🇽'
+    'Hong Kong': '🇭🇰', 'Iceland': '🇮🇸', 'Mexico': '🇲🇽', 'Chile': '🇨🇱',
+    'Colombia': '🇨🇴', 'Guatemala': '🇬🇹', 'India': '🇮🇳', 'Netherlands': '🇳🇱',
+    'Paraguay': '🇵🇾', 'Puerto Rico': '🇵🇷', 'Ecuador': '🇪🇨', 'Belgium': '🇧🇪',
+    'Germany': '🇩🇪', 'Italy': '🇮🇹', 'Switzerland': '🇨🇭', 'New Zealand': '🇳🇿',
+    'Ireland': '🇮🇪', 'Poland': '🇵🇱', 'South Africa': '🇿🇦', 'Greece': '🇬🇷'
 }
 
 # --- 3. DATA PROCESSING ENGINE ---
