@@ -58,6 +58,17 @@ def calculate_elo_data():
         match_date = row['Date']
         match_year = match_date.year
         
+        # --- STEP 1: NORMALIZE IMMEDIATELY ---
+        # This forces 'KOR', 'kor', and 'South Korea' to all become 'South Korea'
+        raw_a = str(row['TeamA']).strip()
+        raw_b = str(row['TeamB']).strip()
+        
+        # We check the mapping; if not found, we use the name as provided
+        t1 = TEAM_NAMES.get(raw_a, TEAM_NAMES.get(raw_a.upper(), raw_a))
+        t2 = TEAM_NAMES.get(raw_b, TEAM_NAMES.get(raw_b.upper(), raw_b))
+
+        # --- STEP 2: SEASON RESET ---
+        # Now that names are normalized, the reset applies to the "unified" team
         if current_season_year is not None and match_year > current_season_year:
             reset = HIATUS_REVERSION if (current_season_year == 2019 and match_year == 2023) else REVERSION_FACTOR
             for team in ratings:
@@ -66,17 +77,20 @@ def calculate_elo_data():
         
         current_season_year = match_year
         
-        t1 = TEAM_NAMES.get(str(row['TeamA']).strip(), str(row['TeamA']).strip())
-        t2 = TEAM_NAMES.get(str(row['TeamB']).strip(), str(row['TeamB']).strip())
-        
+        # --- STEP 3: INITIALIZE RATINGS ---
         for t in [t1, t2]:
             if t not in ratings: 
                 ratings[t] = BASE_ELO
+                # Record starting point for the graph
                 elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "Elo": BASE_ELO})
-            if t not in stats: stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
+            if t not in stats: 
+                stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
             
+        # --- STEP 4: CALCULATION ---
         s1, s2 = row['ScoreA'], row['ScoreB']
         r1, r2 = ratings[t1], ratings[t2]
+        
+        # ... rest of your Elo math ...
         
         exp1 = 1 / (1 + 10**((r2 - r1) / 400))
         actual1 = 1 if s1 > s2 else (0.5 if s1 == s2 else 0)
