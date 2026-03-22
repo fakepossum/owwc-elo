@@ -73,13 +73,16 @@ def calculate_elo_data():
         match_date = row['Date']
         match_year = match_date.year
         
-        # Normalize names immediately to prevent duplicates
+        # 1. RAW DATA: Get names from the CSV and strip hidden spaces
         raw_a = str(row['TeamA']).strip()
         raw_b = str(row['TeamB']).strip()
+        
+        # 2. NORMALIZATION: Force everything to the "Full Name" version
+        # We check the TEAM_NAMES map. If not found, we use the name as-is.
         t1 = TEAM_NAMES.get(raw_a, TEAM_NAMES.get(raw_a.upper(), raw_a))
         t2 = TEAM_NAMES.get(raw_b, TEAM_NAMES.get(raw_b.upper(), raw_b))
-        
-        # Season Reset Logic
+
+        # 3. SEASON RESET: (Must use the normalized 't1' and 't2' names)
         if current_season_year is not None and match_year > current_season_year:
             reset = HIATUS_REVERSION if (current_season_year == 2019 and match_year == 2023) else REVERSION_FACTOR
             for team in ratings:
@@ -88,15 +91,16 @@ def calculate_elo_data():
         
         current_season_year = match_year
         
-        # Initialize team if new
+        # 4. INITIALIZE: Check for the normalized names in our dictionaries
         for t in [t1, t2]:
             if t not in ratings: 
                 ratings[t] = BASE_ELO
                 elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "Elo": BASE_ELO})
             if t not in stats: 
                 stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
-            last_active[t] = match_date
+            last_active[t] = match_date # Update activity tracker for the unified name
             
+        # 5. MATH: Calculate using the unified names
         s1, s2 = row['ScoreA'], row['ScoreB']
         r1, r2 = ratings[t1], ratings[t2]
         
