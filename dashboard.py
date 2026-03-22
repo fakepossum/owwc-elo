@@ -54,7 +54,10 @@ FLAGS = {
     'Colombia': '🇨🇴', 'Guatemala': '🇬🇹', 'India': '🇮🇳', 'Netherlands': '🇳🇱',
     'Paraguay': '🇵🇾', 'Puerto Rico': '🇵🇷', 'Ecuador': '🇪🇨', 'Belgium': '🇧🇪',
     'Germany': '🇩🇪', 'Italy': '🇮🇹', 'Switzerland': '🇨🇭', 'New Zealand': '🇳🇿',
-    'Ireland': '🇮🇪', 'Poland': '🇵🇱', 'South Africa': '🇿🇦', 'Greece': '🇬🇷'
+    'Ireland': '🇮🇪', 'Poland': '🇵🇱', 'South Africa': '🇿🇦', 'Greece': '🇬🇷',
+    'Croatia': '🇭🇷', 'Portugal': '🇵🇹', 'Ukraine': '🇺🇦','Czech Republic': '🇨🇿',
+    'Austria': '🇦🇹', 'Serbia': '🇷🇸', 'Bulgaria': '🇧🇬','Hungary': '🇭🇺','Romania': '🇷🇴',
+    'Vietnam': '🇻🇳', 'Singapore': '🇸🇬', 'Philippines': '🇵🇭', 'Indonesia': '🇮🇩',
 }
 
 # --- 3. DATA PROCESSING ENGINE ---
