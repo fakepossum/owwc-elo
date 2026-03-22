@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 # 1. Page Configuration
-st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
+st.set_page_config(page_title="OWWC ELO Dashboard", page_icon="🏆", layout="wide")
 
 # --- 2. CONSTANTS & MAPPINGS ---
 BASE_ELO = 1500
@@ -73,7 +73,7 @@ def calculate_elo_data():
             reset = HIATUS_REVERSION if (current_season_year == 2019 and match_year == 2023) else REVERSION_FACTOR
             for team in ratings:
                 ratings[team] = ((ratings[team] - BASE_ELO) * reset) + BASE_ELO
-                elo_history.append({"Date": match_date, "Team": team, "Elo": ratings[team]})
+                elo_history.append({"Date": match_date, "Team": team, "ELO": ratings[team]})
         
         current_season_year = match_year
         
@@ -82,7 +82,7 @@ def calculate_elo_data():
             if t not in ratings: 
                 ratings[t] = BASE_ELO
                 # Record starting point for the graph
-                elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "Elo": BASE_ELO})
+                elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "ELO": BASE_ELO})
             if t not in stats: 
                 stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
             
@@ -90,7 +90,7 @@ def calculate_elo_data():
         s1, s2 = row['ScoreA'], row['ScoreB']
         r1, r2 = ratings[t1], ratings[t2]
         
-        # ... rest of your Elo math ...
+        # ... rest of your ELO math ...
         
         exp1 = 1 / (1 + 10**((r2 - r1) / 400))
         actual1 = 1 if s1 > s2 else (0.5 if s1 == s2 else 0)
@@ -107,15 +107,15 @@ def calculate_elo_data():
         else:
             stats[t1]['D'] += 1; stats[t2]['D'] += 1
 
-        elo_history.append({"Date": match_date, "Team": t1, "Elo": ratings[t1]})
-        elo_history.append({"Date": match_date, "Team": t2, "Elo": ratings[t2]})
+        elo_history.append({"Date": match_date, "Team": t1, "ELO": ratings[t1]})
+        elo_history.append({"Date": match_date, "Team": t2, "ELO": ratings[t2]})
 
     return ratings, stats, pd.DataFrame(elo_history), df['Date'].max()
 
 ratings, stats, df_history, latest_date = calculate_elo_data()
 
 # --- 4. WEB INTERFACE ---
-st.title("🎮 OWWC: Global Elo Dashboard")
+st.title("🎮 OWWC: Global ELO Dashboard")
 
 # --- SIDEBAR: MATCH CALCULATOR ---
 st.sidebar.header("⚔️ Match Predictor")
@@ -148,7 +148,7 @@ with col1:
         leaderboard.append({
             "Rank": rank,
             "Team": f"{FLAGS.get(team, '🏳️')} {team}",
-            "Elo": round(elo, 1),
+            "ELO": round(elo, 1),
             "W": stats[team]['W'], "L": stats[team]['L'], "D": stats[team]['D'], "GP": stats[team]['GP']
         })
     st.dataframe(pd.DataFrame(leaderboard), use_container_width=True, hide_index=True)
@@ -156,13 +156,13 @@ with col1:
 with col2:
     st.subheader("Top 3 Nations")
     for i in range(min(3, len(leaderboard))):
-        st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['Elo']} Elo")
+        st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['ELO']} ELO")
 
 # --- 5. PROGRESSION GRAPH ---
 st.divider()
-st.subheader("📈 Elo Progression")
+st.subheader("📈 ELO Progression")
 if selected_teams:
     graph_df = df_history[df_history['Team'].isin(selected_teams)]
-    st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
+    st.line_chart(graph_df, x="Date", y="ELO", color="Team", use_container_width=True)
 
-st.caption(f"Last updated: {latest_date.date()} | Predicted win chance based on current Elo gap.")
+st.caption(f"Last updated: {latest_date.date()} | Predicted win chance based on current ELO gap.")
