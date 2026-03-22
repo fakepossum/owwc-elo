@@ -151,7 +151,28 @@ with col1:
             "ELO": round(elo, 1),
             "W": stats[team]['W'], "L": stats[team]['L'], "D": stats[team]['D'], "GP": stats[team]['GP']
         })
-    st.dataframe(pd.DataFrame(leaderboard), use_container_width=True, hide_index=True)
+    st.dataframe(
+    pd.DataFrame(leaderboard), 
+    use_container_width=True, 
+    hide_index=True,
+    column_config={
+        "Elo": st.column_config.NumberColumn(
+            "Elo",
+            help="Current Elo Rating",
+            format="%.1f",  # This forces exactly 1 decimal place (e.g., 1500.0)
+        ),
+        "Team": st.column_config.TextColumn(
+            "Team",
+            help="National Team",
+            width="large", # Gives enough space for the flag + name
+        ),
+        # You can also center the match stats for a cleaner look
+        "W": st.column_config.NumberColumn("W", width="small"),
+        "L": st.column_config.NumberColumn("L", width="small"),
+        "D": st.column_config.NumberColumn("D", width="small"),
+        "GP": st.column_config.NumberColumn("GP", width="small"),
+    }
+)
 
 with col2:
     st.subheader("Top 5 Nations")
