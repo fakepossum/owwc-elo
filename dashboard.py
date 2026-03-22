@@ -64,4 +64,76 @@ def calculate_elo_data():
         r1, r2 = ratings[t1], ratings[t2]
         
         exp1 = 1 / (1 + 10**((r2 - r1) / 400))
-        actual1 = 1 if s1 > s2 else (0.5 if s1 == s2 else
+        actual1 = 1 if s1 > s2 else (0.5 if s1 == s2 else 0)
+        shift = K * ((abs(s1 - s2) + 1) / 2) * (actual1 - exp1)
+        
+        ratings[t1] += shift
+        ratings[t2] -= shift
+        
+        stats[t1]['GP'] += 1; stats[t2]['GP'] += 1
+        if s1 > s2:
+            stats[t1]['W'] += 1; stats[t2]['L'] += 1
+        elif s2 > s1:
+            stats[t2]['W'] += 1; stats[t1]['L'] += 1
+        else:
+            stats[t1]['D'] += 1; stats[t2]['D'] += 1
+
+        elo_history.append({"Date": match_date, "Team": t1, "Elo": ratings[t1]})
+        elo_history.append({"Date": match_date, "Team": t2, "Elo": ratings[t2]})
+
+    return ratings, stats, pd.DataFrame(elo_history), df['Date'].max()
+
+ratings, stats, df_history, latest_date = calculate_elo_data()
+
+# --- 4. WEB INTERFACE ---
+st.title("🎮 OWWC: Global Elo Dashboard")
+
+# --- SIDEBAR: MATCH CALCULATOR ---
+st.sidebar.header("⚔️ Match Predictor")
+team_a_sel = st.sidebar.selectbox("Team 1", sorted(ratings.keys()), index=0)
+team_b_sel = st.sidebar.selectbox("Team 2", sorted(ratings.keys()), index=1)
+
+if team_a_sel and team_b_sel:
+    r1, r2 = ratings[team_a_sel], ratings[team_b_sel]
+    win_prob_a = 1 / (1 + 10**((r2 - r1) / 400))
+    win_prob_b = 1 - win_prob_a
+    
+    st.sidebar.write(f"**{team_a_sel}**: {win_prob_a:.1%}")
+    st.sidebar.progress(win_prob_a)
+    st.sidebar.write(f"**{team_b_sel}**: {win_prob_b:.1%}")
+    st.sidebar.divider()
+
+st.sidebar.header("⚙️ Settings")
+all_teams = sorted(list(ratings.keys()))
+selected_teams = st.sidebar.multiselect("Graph Teams", all_teams, default=['South Korea', 'China', 'Saudi Arabia'])
+
+# --- MAIN LAYOUT ---
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    st.subheader("Leaderboard")
+    leaderboard = []
+    sorted_teams = sorted(ratings.items(), key=lambda x: x[1], reverse=True)
+    
+    for rank, (team, elo) in enumerate(sorted_teams, 1):
+        leaderboard.append({
+            "Rank": rank,
+            "Team": f"{FLAGS.get(team, '🏳️')} {team}",
+            "Elo": round(elo, 1),
+            "W": stats[team]['W'], "L": stats[team]['L'], "D": stats[team]['D'], "GP": stats[team]['GP']
+        })
+    st.dataframe(pd.DataFrame(leaderboard), use_container_width=True, hide_index=True)
+
+with col2:
+    st.subheader("Top 3 Nations")
+    for i in range(min(3, len(leaderboard))):
+        st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['Elo']} Elo")
+
+# --- 5. PROGRESSION GRAPH ---
+st.divider()
+st.subheader("📈 Elo Progression")
+if selected_teams:
+    graph_df = df_history[df_history['Team'].isin(selected_teams)]
+    st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
+
+st.caption(f"Last updated: {latest_date.date()} | Predicted win chance based on current Elo gap.")
