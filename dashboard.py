@@ -117,76 +117,55 @@ def calculate_elo_data():
 
 ratings, stats, df_history, latest_date = calculate_elo_data()
 
-# --- 4. WEB INTERFACE ---
-st.title("🎮 OWWC: Global ELO Dashboard")
+# --- 4. MAIN INTERFACE (TABS) ---
+# Create the three main sections of your app
+tab_rank, tab_predict, tab_graph = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History"])
 
-# --- SIDEBAR: MATCH CALCULATOR ---
-st.sidebar.header("⚔️ Match Predictor")
-team_a_sel = st.sidebar.selectbox("Team 1", sorted(ratings.keys()), index=0)
-team_b_sel = st.sidebar.selectbox("Team 2", sorted(ratings.keys()), index=1)
-
-if team_a_sel and team_b_sel:
-    r1, r2 = ratings[team_a_sel], ratings[team_b_sel]
-    win_prob_a = 1 / (1 + 10**((r2 - r1) / 400))
-    win_prob_b = 1 - win_prob_a
+# --- TAB 1: RANKINGS ---
+with tab_rank:
+    col1, col2 = st.columns([2, 1])
     
-    st.sidebar.write(f"**{team_a_sel}**: {win_prob_a:.1%}")
-    st.sidebar.progress(win_prob_a)
-    st.sidebar.write(f"**{team_b_sel}**: {win_prob_b:.1%}")
-    st.sidebar.divider()
+    with col1:
+        st.subheader("Global Leaderboard")
+        # (Insert your df_leaderboard and st.dataframe code here)
+        st.dataframe(df_leaderboard, use_container_width=True, hide_index=True, column_config={...})
+        
+    with col2:
+        st.subheader("Top 5 Nations")
+        for i in range(min(5, len(leaderboard))):
+            st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['ELO']} ELO")
 
-st.sidebar.header("⚙️ Settings")
-all_teams = sorted(list(ratings.keys()))
-selected_teams = st.sidebar.multiselect("Graph Teams", all_teams, default=['South Korea', 'China', 'Saudi Arabia'])
-
-# --- MAIN LAYOUT ---
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    st.subheader("Leaderboard")
-    leaderboard = []
-    sorted_teams = sorted(ratings.items(), key=lambda x: x[1], reverse=True)
+# --- TAB 2: MATCH PREDICTOR ---
+with tab_predict:
+    st.subheader("Win Probability Calculator")
+    pcol1, pcol2 = st.columns(2)
     
-    for rank, (team, elo) in enumerate(sorted_teams, 1):
-        leaderboard.append({
-            "Rank": rank,
-            "Team": f"{FLAGS.get(team, '🏳️')} {team}",
-            "ELO": round(elo, 1),
-            "W": stats[team]['W'], "L": stats[team]['L'], "D": stats[team]['D'], "GP": stats[team]['GP']
-        })
-    st.dataframe(
-    pd.DataFrame(leaderboard), 
-    use_container_width=True, 
-    hide_index=True,
-    column_config={
-        "ELO": st.column_config.NumberColumn(
-            "ELO",
-            help="Current ELO Rating",
-            format="%.1f",  # This forces exactly 1 decimal place (e.g., 1500.0)
-        ),
-        "Team": st.column_config.TextColumn(
-            "Team",
-            help="National Team",
-            width="large", # Gives enough space for the flag + name
-        ),
-        # You can also center the match stats for a cleaner look
-        "W": st.column_config.NumberColumn("W", width="small"),
-        "L": st.column_config.NumberColumn("L", width="small"),
-        "D": st.column_config.NumberColumn("D", width="small"),
-        "GP": st.column_config.NumberColumn("GP", width="small"),
-    }
-)
+    with pcol1:
+        t1_sel = st.selectbox("Select Team 1", sorted(ratings.keys()), key="tab_t1")
+    with pcol2:
+        t2_sel = st.selectbox("Select Team 2", sorted(ratings.keys()), key="tab_t2", index=1)
+    
+    if t1_sel and t2_sel:
+        r1, r2 = ratings[t1_sel], ratings[t2_sel]
+        prob1 = 1 / (1 + 10**((r2 - r1) / 400))
+        
+        st.divider()
+        st.write(f"### {FLAGS.get(t1_sel, '')} {t1_sel} vs {FLAGS.get(t2_sel, '')} {t2_sel}")
+        
+        # Big visual outcome
+        mcol1, mcol2 = st.columns(2)
+        mcol1.metric(t1_sel, f"{prob1:.1%}")
+        mcol2.metric(t2_sel, f"{(1-prob1):.1%}")
+        st.progress(prob1)
 
-with col2:
-    st.subheader("Top 5 Nations")
-    for i in range(min(5, len(leaderboard))):
-        st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['ELO']} ELO")
+# --- TAB 3: ELO HISTORY ---
+with tab_graph:
+    st.subheader("Elo Progression Over Time")
+    # (Insert your st.line_chart code here)
+    if selected_teams:
+        graph_df = df_history[df_history['Team'].isin(selected_teams)]
+        st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
+    else:
+        st.info("Select teams in the sidebar to view their history.")
 
-# --- 5. PROGRESSION GRAPH ---
-st.divider()
-st.subheader("📈 ELO Progression")
-if selected_teams:
-    graph_df = df_history[df_history['Team'].isin(selected_teams)]
-    st.line_chart(graph_df, x="Date", y="ELO", color="Team", use_container_width=True)
-
-st.caption(f"Last updated: {latest_date.date()} | Predicted win chance based on current ELO gap.")
+st.caption(f"Last updated: {latest_date.date()}")
