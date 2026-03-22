@@ -37,9 +37,12 @@ TEAM_NAMES = {
 FLAGS = {
     'Saudi Arabia': '🇸🇦', 'Finland': '🇫🇮', 'South Korea': '🇰🇷',
     'China': '🇨🇳', 'United States': '🇺🇸', 'United Kingdom': '🇬🇧',
-    'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Australia': '🇦🇺',
-    'Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
-    'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸'
+    'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Australia': '🇦🇺','Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
+    'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸', 'Chile': '🇨🇱', 'Russia': '🇷🇺',
+    'India': '🇮🇳', 'Mexico': '🇲🇽', 'Argentina': '🇦🇷', 'Peru': '🇵🇪','Netherlands': '🇳🇱',
+    'Sweden': '🇸🇪','Croatia': '🇭🇷','Czech Republic': '🇨🇿','Brazil': '🇧🇷','Bulgaria': '🇧🇬',
+    'Hungary': '🇭🇺','Iceland': '🇮🇸','Ireland': '🇮🇪','Poland': '🇵🇱','South Africa': '🇿🇦',
+    'Germany': '🇩🇪','Serbia': '🇷🇸','Slovakia': '🇸🇰', 'Ukraine': '🇺🇦'
 }
 
 # --- 3. THE LOGIC (Math + History Tracking) ---
