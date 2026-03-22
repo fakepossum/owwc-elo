@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 # 1. Page Configuration
-st.set_page_config(page_title="OWWC ELO Dashboard", page_icon="🏆", layout="wide")
+st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
 
 # --- 2. CONSTANTS & MAPPINGS ---
 BASE_ELO = 1500
@@ -11,49 +11,36 @@ K = 32
 REVERSION_FACTOR = 0.5
 HIATUS_REVERSION = 0.25
 
+# Normalize 3-letter codes and common variations to full names
 TEAM_NAMES = {
-    'IRL': 'Ireland', 'POL': 'Poland', 'ZAF': 'South Africa',
-    'BCS': 'Baltic & Caspian', 'DEU': 'Germany', 'FIN': 'Finland',
-    'HUN': 'Hungary', 'ISL': 'Iceland', 'GBR': 'United Kingdom', 
-    'GRC': 'Greece', 'HRV': 'Croatia', 'NOR': 'Norway', 
-    'PRT': 'Portugal', 'FRA': 'France', 'UKR': 'Ukraine', 
-    'SVK': 'Slovakia', 'TUR': 'Turkey', 'ROU': 'Romania',
-    'SWE': 'Sweden', 'DNK': 'Denmark', 'ITA': 'Italy', 
-    'BGR': 'Bulgaria', 'RUS': 'Russia', 'CHE': 'Switzerland',
-    'ISR': 'Israel', 'AUT': 'Austria', 'SRB': 'Serbia', 
-    'CZE': 'Czech Republic', 'BEN': 'Benelux', 'ESP': 'Spain',
-    'USA': 'United States', 'CAN': 'Canada', 'BRA': 'Brazil', 
-    'CHL': 'Chile', 'COL': 'Colombia', 'MEX': 'Mexico', 
-    'ARG': 'Argentina', 'PER': 'Peru',
-    'KOR': 'South Korea', 'CHN': 'China', 'TWN': 'Taiwan', 
-    'THA': 'Thailand', 'JPN': 'Japan', 'VNM': 'Vietnam', 
-    'SGP': 'Singapore', 'HKG': 'Hong Kong', 'PHL': 'Philippines',
-    'IDN': 'Indonesia', 'PAK': 'Pakistan', 'MYS': 'Malaysia',
-    'CRI': 'Costa Rica', 'BEL': 'Belgium','NLD': 'Netherlands', 'NZL': 'New Zealand',
-    'ROU': 'Romania','KSA': 'Saudi Arabia','PRY': 'Paraguay','IND': 'India','LVA': 'Latvia',
-    'GTM': 'Guatemala','PRI': 'Puerto Rico','ECU': 'Ecuador'
+    'KSA': 'Saudi Arabia', 'KOR': 'South Korea', 'USA': 'United States',
+    'CHN': 'China', 'FIN': 'Finland', 'GBR': 'United Kingdom',
+    'CAN': 'Canada', 'FRA': 'France', 'JPN': 'Japan',
+    'THA': 'Thailand', 'AUS': 'Australia', 'ESP': 'Spain',
+    'COL': 'Colombia', 'DNK': 'Denmark', 'NOR': 'Norway',
+    'RUS': 'Russia', 'SWE': 'Sweden', 'BRA': 'Brazil',
+    'HKG': 'Hong Kong', 'ISL': 'Iceland', 'MEX': 'Mexico'
 }
 
 FLAGS = {
     'Saudi Arabia': '🇸🇦', 'Finland': '🇫🇮', 'South Korea': '🇰🇷',
     'China': '🇨🇳', 'United States': '🇺🇸', 'United Kingdom': '🇬🇧',
-    'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Australia': '🇦🇺','Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
-    'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸', 'Chile': '🇨🇱', 'Russia': '🇷🇺',
-    'India': '🇮🇳', 'Mexico': '🇲🇽', 'Argentina': '🇦🇷', 'Peru': '🇵🇪','Netherlands': '🇳🇱',
-    'Sweden': '🇸🇪','Croatia': '🇭🇷','Czech Republic': '🇨🇿','Brazil': '🇧🇷','Bulgaria': '🇧🇬',
-    'Hungary': '🇭🇺','Iceland': '🇮🇸','Ireland': '🇮🇪','Poland': '🇵🇱','South Africa': '🇿🇦',
-    'Germany': '🇩🇪','Serbia': '🇷🇸','Slovakia': '🇸🇰', 'Ukraine': '🇺🇦'
+    'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Australia': '🇦🇺',
+    'Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
+    'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸',
+    'Russia': '🇷🇺', 'Sweden': '🇸🇪', 'Brazil': '🇧🇷',
+    'Hong Kong': '🇭🇰', 'Iceland': '🇮🇸', 'Mexico': '🇲🇽'
 }
 
-# --- 3. THE LOGIC (Math + History Tracking) ---
+# --- 3. DATA PROCESSING ENGINE ---
 @st.cache_data
 def calculate_elo_data():
-    # Relative path for Streamlit Cloud
     df = pd.read_csv('overwatch_results.csv', parse_dates=['Date'])
     df = df.sort_values('Date')
     
     ratings = {}
     stats = {}
+    last_active = {}
     elo_history = []
     current_season_year = None
     
@@ -61,40 +48,34 @@ def calculate_elo_data():
         match_date = row['Date']
         match_year = match_date.year
         
-        # --- STEP 1: NORMALIZE IMMEDIATELY ---
-        # This forces 'KOR', 'kor', and 'South Korea' to all become 'South Korea'
+        # Normalize names immediately to prevent duplicates
         raw_a = str(row['TeamA']).strip()
         raw_b = str(row['TeamB']).strip()
-        
-        # We check the mapping; if not found, we use the name as provided
         t1 = TEAM_NAMES.get(raw_a, TEAM_NAMES.get(raw_a.upper(), raw_a))
         t2 = TEAM_NAMES.get(raw_b, TEAM_NAMES.get(raw_b.upper(), raw_b))
-
-        # --- STEP 2: SEASON RESET ---
-        # Now that names are normalized, the reset applies to the "unified" team
+        
+        # Season Reset Logic
         if current_season_year is not None and match_year > current_season_year:
             reset = HIATUS_REVERSION if (current_season_year == 2019 and match_year == 2023) else REVERSION_FACTOR
             for team in ratings:
                 ratings[team] = ((ratings[team] - BASE_ELO) * reset) + BASE_ELO
-                elo_history.append({"Date": match_date, "Team": team, "ELO": ratings[team]})
+                elo_history.append({"Date": match_date, "Team": team, "Elo": ratings[team]})
         
         current_season_year = match_year
         
-        # --- STEP 3: INITIALIZE RATINGS ---
+        # Initialize team if new
         for t in [t1, t2]:
             if t not in ratings: 
                 ratings[t] = BASE_ELO
-                # Record starting point for the graph
-                elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "ELO": BASE_ELO})
+                elo_history.append({"Date": match_date - datetime.timedelta(days=1), "Team": t, "Elo": BASE_ELO})
             if t not in stats: 
                 stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
+            last_active[t] = match_date
             
-        # --- STEP 4: CALCULATION ---
         s1, s2 = row['ScoreA'], row['ScoreB']
         r1, r2 = ratings[t1], ratings[t2]
         
-        # ... rest of your ELO math ...
-        
+        # Elo Calculation
         exp1 = 1 / (1 + 10**((r2 - r1) / 400))
         actual1 = 1 if s1 > s2 else (0.5 if s1 == s2 else 0)
         shift = K * ((abs(s1 - s2) + 1) / 2) * (actual1 - exp1)
@@ -102,6 +83,7 @@ def calculate_elo_data():
         ratings[t1] += shift
         ratings[t2] -= shift
         
+        # Update Stats
         stats[t1]['GP'] += 1; stats[t2]['GP'] += 1
         if s1 > s2:
             stats[t1]['W'] += 1; stats[t2]['L'] += 1
@@ -110,62 +92,97 @@ def calculate_elo_data():
         else:
             stats[t1]['D'] += 1; stats[t2]['D'] += 1
 
-        elo_history.append({"Date": match_date, "Team": t1, "ELO": ratings[t1]})
-        elo_history.append({"Date": match_date, "Team": t2, "ELO": ratings[t2]})
+        # Record History
+        elo_history.append({"Date": match_date, "Team": t1, "Elo": ratings[t1]})
+        elo_history.append({"Date": match_date, "Team": t2, "Elo": ratings[t2]})
 
-    return ratings, stats, pd.DataFrame(elo_history), df['Date'].max()
+    return ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max()
 
-ratings, stats, df_history, latest_date = calculate_elo_data()
+# Run Calculation
+ratings, stats, last_active, df_history, latest_date = calculate_elo_data()
 
-# --- 4. MAIN INTERFACE (TABS) ---
-# Create the three main sections of your app
+# --- 4. SIDEBAR SETTINGS ---
+st.sidebar.header("Dashboard Settings")
+show_inactive = st.sidebar.checkbox("Show Inactive Teams", value=False, help="Show teams that haven't played in 2+ years")
+all_teams = sorted(list(ratings.keys()))
+selected_teams = st.sidebar.multiselect("Graph: Select Specific Teams", all_teams)
+
+# --- 5. DATA PREPARATION ---
+leaderboard = []
+sorted_teams = sorted(ratings.items(), key=lambda x: x[1], reverse=True)
+
+rank_counter = 1
+for team, elo in sorted_teams:
+    days_since_active = (latest_date - last_active[team]).days
+    is_active = days_since_active <= 730
+    
+    if show_inactive or is_active:
+        leaderboard.append({
+            "Rank": rank_counter,
+            "Team": f"{FLAGS.get(team, '🏳️')} {team}",
+            "RawName": team,
+            "ELO": round(float(elo), 1),
+            "W": stats[team]['W'], "L": stats[team]['L'], 
+            "D": stats[team]['D'], "GP": stats[team]['GP']
+        })
+        rank_counter += 1
+
+df_leaderboard = pd.DataFrame(leaderboard)
+
+# --- 6. MAIN INTERFACE (TABS) ---
 tab_rank, tab_predict, tab_graph = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History"])
 
-# --- TAB 1: RANKINGS ---
 with tab_rank:
-    col1, col2 = st.columns([2, 1])
+    col_main, col_metrics = st.columns([2, 1])
     
-    with col1:
+    with col_main:
         st.subheader("Global Leaderboard")
-        # (Insert your df_leaderboard and st.dataframe code here)
-        st.dataframe(df_leaderboard, use_container_width=True, hide_index=True, column_config={...})
-        
-    with col2:
+        st.dataframe(
+            df_leaderboard,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "ELO": st.column_config.NumberColumn("ELO", format="%.1f"),
+                "Team": st.column_config.TextColumn("Team", width="large"),
+                "RawName": None # Hide helper column
+            }
+        )
+    
+    with col_metrics:
         st.subheader("Top 5 Nations")
         for i in range(min(5, len(leaderboard))):
-            st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['ELO']} ELO")
+            st.metric(
+                label=f"Rank {leaderboard[i]['Rank']}", 
+                value=leaderboard[i]['Team'], 
+                delta=f"{leaderboard[i]['ELO']} ELO"
+            )
 
-# --- TAB 2: MATCH PREDICTOR ---
 with tab_predict:
     st.subheader("Win Probability Calculator")
     pcol1, pcol2 = st.columns(2)
-    
     with pcol1:
-        t1_sel = st.selectbox("Select Team 1", sorted(ratings.keys()), key="tab_t1")
+        t1 = st.selectbox("Team 1", all_teams, index=0, key="p1")
     with pcol2:
-        t2_sel = st.selectbox("Select Team 2", sorted(ratings.keys()), key="tab_t2", index=1)
+        t2 = st.selectbox("Team 2", all_teams, index=1, key="p2")
     
-    if t1_sel and t2_sel:
-        r1, r2 = ratings[t1_sel], ratings[t2_sel]
+    if t1 and t2:
+        r1, r2 = ratings[t1], ratings[t2]
         prob1 = 1 / (1 + 10**((r2 - r1) / 400))
-        
         st.divider()
-        st.write(f"### {FLAGS.get(t1_sel, '')} {t1_sel} vs {FLAGS.get(t2_sel, '')} {t2_sel}")
-        
-        # Big visual outcome
-        mcol1, mcol2 = st.columns(2)
-        mcol1.metric(t1_sel, f"{prob1:.1%}")
-        mcol2.metric(t2_sel, f"{(1-prob1):.1%}")
+        st.markdown(f"### {FLAGS.get(t1, '🏳️')} {t1} vs {FLAGS.get(t2, '🏳️')} {t2}")
+        m1, m2 = st.columns(2)
+        m1.metric(f"{t1} Chance", f"{prob1:.1%}")
+        m2.metric(f"{t2} Chance", f"{(1-prob1):.1%}")
         st.progress(prob1)
 
-# --- TAB 3: ELO HISTORY ---
 with tab_graph:
     st.subheader("Elo Progression Over Time")
-    # (Insert your st.line_chart code here)
-    if selected_teams:
-        graph_df = df_history[df_history['Team'].isin(selected_teams)]
-        st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
-    else:
-        st.info("Select teams in the sidebar to view their history.")
+    # Default to Top 10 if no selection
+    display_teams = selected_teams if selected_teams else [t['RawName'] for t in leaderboard[:10]]
+    if not selected_teams:
+        st.info("💡 Showing Top 10 by default. Use the sidebar to filter.")
+        
+    graph_df = df_history[df_history['Team'].isin(display_teams)]
+    st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
 
-st.caption(f"Last updated: {latest_date.date()}")
+st.caption(f"Last updated: {latest_date.date()} | ELO calculation based on OWWC match results.")
