@@ -21,7 +21,26 @@ TEAM_NAMES = {
     'RUS': 'Russia', 'SWE': 'Sweden', 'BRA': 'Brazil',
     'HKG': 'Hong Kong', 'ISL': 'Iceland', 'MEX': 'Mexico',
     'GTM': 'Guatemala', 'IND': 'India', 'LVA': 'Latvia',
-    'PRY': 'Paraguay', 'PRI': 'Puerto Rico', 'ECU': 'Ecuador'
+    'PRY': 'Paraguay', 'PRI': 'Puerto Rico', 'ECU': 'Ecuador',
+    'IRL': 'Ireland', 'POL': 'Poland', 'ZAF': 'South Africa',
+    'BCS': 'Baltic & Caspian', 'DEU': 'Germany', 'FIN': 'Finland',
+    'HUN': 'Hungary', 'ISL': 'Iceland', 'GBR': 'United Kingdom', 
+    'GRC': 'Greece', 'HRV': 'Croatia', 'NOR': 'Norway', 
+    'PRT': 'Portugal', 'FRA': 'France', 'UKR': 'Ukraine', 
+    'SVK': 'Slovakia', 'TUR': 'Turkey', 'ROU': 'Romania',
+    'SWE': 'Sweden', 'DNK': 'Denmark', 'ITA': 'Italy', 
+    'BGR': 'Bulgaria', 'RUS': 'Russia', 'CHE': 'Switzerland',
+    'ISR': 'Israel', 'AUT': 'Austria', 'SRB': 'Serbia', 
+    'CZE': 'Czech Republic', 'BEN': 'Benelux', 'ESP': 'Spain',
+    'USA': 'United States', 'CAN': 'Canada', 'BRA': 'Brazil', 
+    'CHL': 'Chile', 'COL': 'Colombia', 'MEX': 'Mexico', 
+    'ARG': 'Argentina', 'PER': 'Peru','KOR': 'South Korea', 'CHN': 'China', 'TWN': 'Taiwan', 
+    'THA': 'Thailand', 'JPN': 'Japan', 'VNM': 'Vietnam', 
+    'SGP': 'Singapore', 'HKG': 'Hong Kong', 'PHL': 'Philippines',
+    'IDN': 'Indonesia', 'PAK': 'Pakistan', 'MYS': 'Malaysia','CRI': 'Costa Rica',
+    'BEL': 'Belgium','NLD': 'Netherlands','NZL': 'New Zealand',
+    'ROU': 'Romania','KSA': 'Saudi Arabia','PRY': 'Paraguay','IND': 'India',
+    'LVA': 'Latvia','GTM': 'Guatemala','PRI': 'Puerto Rico','ECU': 'Ecuador',
 }
 
 FLAGS = {
