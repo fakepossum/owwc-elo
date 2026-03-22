@@ -154,8 +154,8 @@ with col1:
     st.dataframe(pd.DataFrame(leaderboard), use_container_width=True, hide_index=True)
 
 with col2:
-    st.subheader("Top 10 Nations")
-    for i in range(min(10, len(leaderboard))):
+    st.subheader("Top 5 Nations")
+    for i in range(min(5, len(leaderboard))):
         st.metric(label=f"Rank {leaderboard[i]['Rank']}", value=leaderboard[i]['Team'], delta=f"{leaderboard[i]['ELO']} ELO")
 
 # --- 5. PROGRESSION GRAPH ---
