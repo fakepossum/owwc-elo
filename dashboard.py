@@ -217,7 +217,7 @@ with tab_rank:
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="medium"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
-                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right"),
+                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right",width="auto"),
                 "RawName": None # Hide helper column
             }
         )
