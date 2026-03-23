@@ -10,7 +10,7 @@ st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wi
 BASE_ELO = 1500
 K = 32
 REVERSION_FACTOR = 0.5
-HIATUS_REVERSION = 0.25
+HIATUS_REVERSION = 0.5
 
 # Normalize 3-letter codes and common variations to full names
 TEAM_NAMES = {
