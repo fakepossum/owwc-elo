@@ -215,9 +215,9 @@ with tab_rank:
             use_container_width=True,
             hide_index=True,
             column_config={
-                "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="medium"),
+                "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="auto"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
-                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right",width="small"),
+                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right",width="auto"),
                 "RawName": None # Hide helper column
             }
         )
