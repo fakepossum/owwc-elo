@@ -42,6 +42,7 @@ TEAM_NAMES = {
     'BEL': 'Belgium','NLD': 'Netherlands','NZL': 'New Zealand',
     'ROU': 'Romania','KSA': 'Saudi Arabia','PRY': 'Paraguay','IND': 'India',
     'LVA': 'Latvia','GTM': 'Guatemala','PRI': 'Puerto Rico','ECU': 'Ecuador',
+    'HND': 'Honduras','SLV': 'El Salvador','URY': 'Uruguay','VEN': 'Venezuela'
 }
 
 FLAGS = {
@@ -60,7 +61,8 @@ FLAGS = {
     'Austria': '🇦🇹', 'Serbia': '🇷🇸', 'Bulgaria': '🇧🇬','Hungary': '🇭🇺','Romania': '🇷🇴',
     'Vietnam': '🇻🇳', 'Singapore': '🇸🇬', 'Philippines': '🇵🇭', 'Indonesia': '🇮🇩',
     'Malaysia': '🇲🇾', 'Costa Rica': '🇨🇷', 'Benelux': '🇧🇪🇳🇱', 'Baltic & Caspian': '🌊',
-    'Argentina': '🇦🇷', 'Peru': '🇵🇪','Turkey': '🇹🇷','Taiwan': '🇹🇼'
+    'Argentina': '🇦🇷', 'Peru': '🇵🇪','Turkey': '🇹🇷','Taiwan': '🇹🇼','Pakistan': '🇵🇰','Honduras': '🇭🇳',
+    'Panama': '🇵🇦', 'Paraguay': '🇵🇾'
 }
 
 # --- 3. DATA PROCESSING ENGINE ---
@@ -165,7 +167,7 @@ graph_rank_df = df_yearly[df_yearly['Team'].isin(display_teams)]
 rank_counter = 1
 for team, elo in sorted_teams:
     days_since_active = (latest_date - last_active[team]).days
-    is_active = days_since_active <= 730
+    is_active = days_since_active <= 1460 # 4 years * 365 days
     
     if show_inactive or is_active:
         leaderboard.append({
