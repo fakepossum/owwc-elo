@@ -251,7 +251,6 @@ with tab_rank:
         )
     
     with col_metrics:
-    # Adding a header emoji is good for a climbers list
         st.subheader("🚀 Top 5 Climbers")
         
         if top_5_climbers:
@@ -259,20 +258,16 @@ with tab_rank:
                 t_name = climber['Team']
                 t_flag = FLAGS.get(t_name, '🏳️')
                 t_jump = int(climber['Jump'])
-                t_rank_now = int(climber['Rank_now'])
+                t_rank_now = int(climber['ActiveRank_now'])
                 
-                # --- NEW METRIC LAYOUT ---
                 st.metric(
-                    label=f"{t_flag} (Climbed {t_jump} spots since 2023)", # The small description text
-                    value=f"{t_name}", # The big white text
-                    delta=f"Rank #{t_rank_now}", # The rank indicator
-                    delta_color="normal" # This keeps the rank white rather than green/red
+                    label=f"{t_flag} Current Rank: #{t_rank_now}", 
+                    value=t_name, 
+                    delta=f"{t_jump} Spots",
+                    delta_color="normal" # This enables Green for up, Red for down
                 )
-                # Add a small line between them for cleaner visual separation
-                st.markdown("---")
-                
         else:
-            st.write("Need more tournament years to calculate climbs.")
+            st.info("Play more matches to see rank shifts!")
 
 with tab_predict:
     st.subheader("Win Probability Calculator")
