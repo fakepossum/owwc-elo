@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import datetime
+import altair as alt
 
 # 1. Page Configuration
 st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
@@ -145,6 +146,22 @@ selected_teams = st.sidebar.multiselect("Graph: Select Specific Teams", all_team
 leaderboard = []
 sorted_teams = sorted(ratings.items(), key=lambda x: x[1], reverse=True)
 
+# --- 5.5 PREPARE YEARLY RANKINGS FOR GRAPH ---
+# Create a copy of history and extract the year
+df_ranks = df_history.copy()
+df_ranks['Year'] = df_ranks['Date'].dt.year
+
+# Get the last Elo entry for each team per year
+df_yearly = df_ranks.groupby(['Year', 'Team'])['Elo'].last().reset_index()
+
+# Calculate rank within each year (1 = highest Elo)
+df_yearly['Rank'] = df_yearly.groupby('Year')['Elo'].rank(ascending=False, method='min')
+
+# Optional: Filter for the graph
+# (Same logic as before: Selected teams or Top 10)
+display_teams = selected_teams if selected_teams else [t['RawName'] for t in leaderboard[:10]]
+graph_rank_df = df_yearly[df_yearly['Team'].isin(display_teams)]
+
 rank_counter = 1
 for team, elo in sorted_teams:
     days_since_active = (latest_date - last_active[team]).days
@@ -210,13 +227,32 @@ with tab_predict:
         st.progress(prob1)
 
 with tab_graph:
-    st.subheader("Elo Progression Over Time")
-    # Default to Top 10 if no selection
-    display_teams = selected_teams if selected_teams else [t['RawName'] for t in leaderboard[:10]]
+    st.subheader("Historical Rank Progression")
+    
+    # 1. Determine which teams to show for the default view
     if not selected_teams:
-        st.info("💡 Showing Top 10 by default. Use the sidebar to filter.")
-        
-    graph_df = df_history[df_history['Team'].isin(display_teams)]
-    st.line_chart(graph_df, x="Date", y="Elo", color="Team", use_container_width=True)
+        # Get the names of the current Top 10 from your leaderboard
+        default_teams = [t['RawName'] for t in leaderboard[:10]]
+        st.info("💡 Showing **Current Top 10** rankings. Use the sidebar to compare other nations.")
+    else:
+        default_teams = selected_teams
 
-st.caption(f"Last updated: {latest_date.date()} | ELO calculation based on OWWC match results.")
+    # 2. Filter the yearly rank data
+    graph_rank_df = df_yearly[df_yearly['Team'].isin(default_teams)]
+
+    # 3. Render the chart (only if we have data)
+    if not graph_rank_df.empty:
+        rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='monotone').encode(
+            x=alt.X('Year:O', title='Tournament Year'),
+            y=alt.Y('Rank:Q', 
+                    title='World Ranking Position',
+                    scale=alt.Scale(domain=[1, 20], reverse=True), # 1 at top
+                    axis=alt.Axis(tickCount=10)
+                   ),
+            color=alt.Color('Team:N', title='Nation', sort=default_teams),
+            tooltip=['Year', 'Team', 'Rank', 'Elo']
+        ).properties(height=500).interactive()
+
+        st.altair_chart(rank_chart, use_container_width=True)
+    else:
+        st.warning("No historical ranking data found for these teams.")
