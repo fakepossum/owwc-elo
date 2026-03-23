@@ -58,6 +58,8 @@ FLAGS = {
     'Croatia': '🇭🇷', 'Portugal': '🇵🇹', 'Ukraine': '🇺🇦','Czech Republic': '🇨🇿',
     'Austria': '🇦🇹', 'Serbia': '🇷🇸', 'Bulgaria': '🇧🇬','Hungary': '🇭🇺','Romania': '🇷🇴',
     'Vietnam': '🇻🇳', 'Singapore': '🇸🇬', 'Philippines': '🇵🇭', 'Indonesia': '🇮🇩',
+    'Malaysia': '🇲🇾', 'Costa Rica': '🇨🇷', 'Benelux': '🇧🇪🇳🇱', 'Baltic & Caspian': '🌊',
+    'Argentina': '🇦🇷', 'Peru': '🇵🇪','Turkey': '🇹🇷','Taiwan': '🇹🇼'
 }
 
 # --- 3. DATA PROCESSING ENGINE ---
