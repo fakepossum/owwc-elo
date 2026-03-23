@@ -202,6 +202,25 @@ for team, elo in sorted_teams:
 
 df_leaderboard = pd.DataFrame(leaderboard)
 
+# --- 5.6 CALCULATE TOP CLIMBERS (2023 vs 2026) ---
+years = sorted(df_yearly['Year'].unique())
+top_5_climbers = []
+
+if len(years) >= 2:
+    current_yr = years[-1]   # 2026
+    previous_yr = years[-2]  # 2023
+    
+    # Get ranks for both years
+    df_now = df_yearly[df_yearly['Year'] == current_yr][['Team', 'Rank']]
+    df_then = df_yearly[df_yearly['Year'] == previous_yr][['Team', 'Rank']]
+    
+    # Merge and calculate the jump
+    df_climb = pd.merge(df_now, df_then, on='Team', suffixes=('_now', '_then'))
+    df_climb['Jump'] = df_climb['Rank_then'] - df_climb['Rank_now']
+    
+    # Sort by the biggest jump and take top 5
+    top_5_climbers = df_climb.sort_values(by='Jump', ascending=False).head(5).to_dict('records')
+
 # --- 6. MAIN INTERFACE (TABS) ---
 tab_rank, tab_predict, tab_graph = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History"])
 
@@ -223,13 +242,21 @@ with tab_rank:
         )
     
     with col_metrics:
-        st.subheader("Top 5 Nations")
-        for i in range(min(5, len(leaderboard))):
+    st.subheader("🚀 Top 5 Climbers")
+    
+    if top_5_climbers:
+        for climber in top_5_climbers:
+            t_name = climber['Team']
+            # Find the flag from your dictionary
+            t_flag = FLAGS.get(t_name, '🏳️')
+            
             st.metric(
-                label=f"Rank {leaderboard[i]['Rank']}", 
-                value=leaderboard[i]['Team'], 
-                delta=f"{leaderboard[i]['ELO']} ELO"
+                label=f"{t_flag} {t_name}",
+                value=f"Rank #{int(climber['Rank_now'])}",
+                delta=f"↑ {int(climber['Jump'])} spots"
             )
+    else:
+        st.write("Need more tournament years to calculate climbs.")
 
 with tab_predict:
     st.subheader("Win Probability Calculator")
