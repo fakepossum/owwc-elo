@@ -242,21 +242,21 @@ with tab_rank:
         )
     
     with col_metrics:
-    st.subheader("🚀 Top 5 Climbers")
+        st.subheader("🚀 Top 5 Climbers")
     
-    if top_5_climbers:
-        for climber in top_5_climbers:
-            t_name = climber['Team']
-            # Find the flag from your dictionary
-            t_flag = FLAGS.get(t_name, '🏳️')
-            
-            st.metric(
-                label=f"{t_flag} {t_name}",
-                value=f"Rank #{int(climber['Rank_now'])}",
-                delta=f"↑ {int(climber['Jump'])} spots"
-            )
-    else:
-        st.write("Need more tournament years to calculate climbs.")
+        if top_5_climbers:
+            for climber in top_5_climbers:
+                t_name = climber['Team']
+                # Find the flag from your dictionary
+                t_flag = FLAGS.get(t_name, '🏳️')
+                
+                st.metric(
+                    label=f"{t_flag} {t_name}",
+                    value=f"Rank #{int(climber['Rank_now'])}",
+                    delta=f"↑ {int(climber['Jump'])} spots"
+                )
+        else:
+            st.write("Need more tournament years to calculate climbs.")
 
 with tab_predict:
     st.subheader("Win Probability Calculator")
