@@ -177,7 +177,7 @@ with tab_rank:
             hide_index=True,
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f"),
-                "Team": st.column_config.TextColumn("Team", width="large"),
+                "Team": st.column_config.TextColumn("Team", width="auto"),
                 "RawName": None # Hide helper column
             }
         )
