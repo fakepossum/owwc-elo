@@ -452,3 +452,54 @@ Date,TeamA,TeamB,ScoreA,ScoreB
 2023-11-04,Finland,KSA,2,3
 2023-11-05,China,KSA,2,3
 2023-11-05,South Korea,Finland,2,3
+2026-03-13,Chile,Costa Rica,2,0
+2026-03-13,Argentina,PRI,0,2
+2026-03-13,Costa Rica,HND,2,0
+2026-03-13,Chile,Peru,2,1
+2026-03-13,Peru,Ecuador,2,0
+2026-03-13,GTM,Panama,2,1
+2026-03-13,HND,Panama,2,1
+2026-03-13,GTM,Ecuador,2,1
+2026-03-14,GTM,HND,2,0
+2026-03-14,Ecuador,Panama,2,0
+2026-03-14,Argentina,Ecuador,2,1
+2026-03-14,Costa Rica,PRI,0,2
+2026-03-14,Chile,PRI,2,0
+2026-03-14,Argentina,Costa Rica,2,0
+2026-03-14,Chile,Panama,2,0
+2026-03-14,HND,Peru,0,2
+2026-03-14,Ecuador,HND,2,0
+2026-03-14,GTM,Peru,0,2
+2026-03-14,Costa Rica,Panama,2,0
+2026-03-14,Argentina,GTM,2,0
+2026-03-14,Argentina,Chile,0,2
+2026-03-14,Peru,PRI,1,2
+2026-03-15,Ecuador,Chile,0,2
+2026-03-15,Argentina,HND,2,0
+2026-03-15,Panama,Peru,0,2
+2026-03-15,Chile,GTM,2,0
+2026-03-15,HND,PRI,0,2
+2026-03-15,Costa Rica,Ecuador,2,0
+2026-03-15,Argentina,Panama,2,0
+2026-03-15,Costa Rica,GTM,2,0
+2026-03-15,Panama,PRI,0,2
+2026-03-15,Chile,HND,2,0
+2026-03-15,GTM,PRI,0,2
+2026-03-15,Costa Rica,Peru,2,0
+2026-03-15,Argentina,Peru,2,1
+2026-03-15,PRI,Ecuador,2,0
+2026-03-14,India,Philippines,0,2
+2026-03-14,Singapore,New Zealand,0,2
+2026-03-14,Pakistan,Philippines,2,1
+2026-03-14,India,Malaysia,2,0
+2026-03-14,India,Singapore,2,0
+2026-03-14,Malaysia,Philippines,0,2
+2026-03-14,Malaysia,Singapore,0,2
+2026-03-14,New Zealand,Pakistan,1,2
+2026-03-15,New Zealand,India,1,2
+2026-03-15,Pakistan,Singapore,2,1
+2026-03-15,New Zealand,Philippines,1,2
+2026-03-15,India,Pakistan,2,0
+2026-03-15,Philippines,Singapore,2,0
+2026-03-15,New Zealand,Malaysia,2,1
+2026-03-15,Malaysia,Pakistan,0,2
