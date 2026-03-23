@@ -74,6 +74,7 @@ def calculate_elo_data():
     ratings = {}
     stats = {}
     last_active = {}
+    team_form = {}
     elo_history = []
     current_season_year = None
     
@@ -107,6 +108,8 @@ def calculate_elo_data():
             if t not in stats: 
                 stats[t] = {'W': 0, 'L': 0, 'D': 0, 'GP': 0}
             last_active[t] = match_date # Update activity tracker for the unified name
+            if t not in team_form:
+                team_form[t] = []
             
         # 5. MATH: Calculate using the unified names
         s1, s2 = row['ScoreA'], row['ScoreB']
@@ -129,11 +132,26 @@ def calculate_elo_data():
         else:
             stats[t1]['D'] += 1; stats[t2]['D'] += 1
 
+        # Update Team Form
+        for t, score_self, score_opp in [(t1, s1, s2), (t2, s2, s1)]:
+            if score_self > score_opp:
+                res = "🟢" # Win
+            elif score_self < score_opp:
+                res = "🔴" # Loss
+            else:
+                res = "⚪" # Draw
+            
+            team_form[t].append(res)
+            
+            # Keep only the last 5 matches to keep the table clean
+            if len(team_form[t]) > 5:
+                team_form[t].pop(0)
+
         # Record History
         elo_history.append({"Date": match_date, "Team": t1, "Elo": ratings[t1]})
         elo_history.append({"Date": match_date, "Team": t2, "Elo": ratings[t2]})
 
-    return ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max()
+    return ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max(), team_form
 
 # Run Calculation
 ratings, stats, last_active, df_history, latest_date = calculate_elo_data()
@@ -197,6 +215,7 @@ with tab_rank:
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="medium"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
+                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, newest match on the right"),
                 "RawName": None # Hide helper column
             }
         )
