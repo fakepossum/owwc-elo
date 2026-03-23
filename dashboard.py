@@ -154,7 +154,7 @@ def calculate_elo_data():
     return ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max(), team_form
 
 # Run Calculation
-ratings, stats, last_active, df_history, latest_date = calculate_elo_data()
+ratings, stats, last_active, df_history, latest_date, team_form = calculate_elo_data()
 
 # --- 4. SIDEBAR SETTINGS ---
 st.sidebar.header("Dashboard Settings")
