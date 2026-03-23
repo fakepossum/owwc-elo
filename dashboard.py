@@ -186,6 +186,7 @@ rank_counter = 1
 for team, elo in sorted_teams:
     days_since_active = (latest_date - last_active[team]).days
     is_active = days_since_active <= 1460 # 4 years * 365 days
+    form_string = "".join(team_form.get(team, []))
     
     if show_inactive or is_active:
         leaderboard.append({
@@ -193,6 +194,7 @@ for team, elo in sorted_teams:
             "Team": f"{FLAGS.get(team, '🏳️')} {team}",
             "RawName": team,
             "ELO": round(float(elo), 1),
+            "Form": form_string,
             "W": stats[team]['W'], "L": stats[team]['L'], 
             "D": stats[team]['D'], "GP": stats[team]['GP']
         })
@@ -215,7 +217,7 @@ with tab_rank:
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="medium"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
-                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, newest match on the right"),
+                "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right"),
                 "RawName": None # Hide helper column
             }
         )
