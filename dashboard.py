@@ -229,30 +229,32 @@ with tab_predict:
 with tab_graph:
     st.subheader("Historical Rank Progression")
     
-    # 1. Determine which teams to show for the default view
-    if not selected_teams:
-        # Get the names of the current Top 10 from your leaderboard
-        default_teams = [t['RawName'] for t in leaderboard[:10]]
-        st.info("💡 Showing **Current Top 10** rankings. Use the sidebar to compare other nations.")
-    else:
-        default_teams = selected_teams
+    # 1. Determine teams (Default to Top 10)
+    display_teams = selected_teams if selected_teams else [t['RawName'] for t in leaderboard[:10]]
+    graph_rank_df = df_yearly[df_yearly['Team'].isin(display_teams)]
 
-    # 2. Filter the yearly rank data
-    graph_rank_df = df_yearly[df_yearly['Team'].isin(default_teams)]
-
-    # 3. Render the chart (only if we have data)
     if not graph_rank_df.empty:
-        rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='monotone').encode(
+        # --- NEW: SELECTION LOGIC ---
+        # This creates a click-to-highlight interaction
+        selection = alt.selection_point(fields=['Team'], bind='legend')
+
+        rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='monotone', strokeWidth=4).encode(
             x=alt.X('Year:O', title='Tournament Year'),
             y=alt.Y('Rank:Q', 
-                    title='World Ranking Position',
-                    scale=alt.Scale(domain=[1, 20], reverse=True), # 1 at top
-                    axis=alt.Axis(tickCount=10)
-                   ),
-            color=alt.Color('Team:N', title='Nation', sort=default_teams),
+                    scale=alt.Scale(domain=[1, 20], reverse=True), 
+                    title='World Ranking Position'),
+            color=alt.Color('Team:N', title='Click Legend to Highlight'),
+            # --- NEW: OPACITY LOGIC ---
+            # If a team is selected, opacity is 1.0; otherwise, it's 0.1
+            opacity=alt.condition(selection, alt.value(1.0), alt.value(0.1)),
             tooltip=['Year', 'Team', 'Rank', 'Elo']
-        ).properties(height=500).interactive()
+        ).add_params(
+            selection
+        ).properties(
+            height=500
+        ).interactive()
 
         st.altair_chart(rank_chart, use_container_width=True)
+        st.info("👆 **Tip:** Click a team name in the legend to highlight their specific path.")
     else:
-        st.warning("No historical ranking data found for these teams.")
+        st.warning("No data found.")
