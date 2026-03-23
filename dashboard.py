@@ -242,19 +242,26 @@ with tab_rank:
         )
     
     with col_metrics:
-        st.subheader("🚀 Top 5 Climbers")
-    
+    # Adding a header emoji is good for a climbers list
+        st.subheader("🚀 Top 5 Climbers (2023-2026)")
+        
         if top_5_climbers:
             for climber in top_5_climbers:
                 t_name = climber['Team']
-                # Find the flag from your dictionary
                 t_flag = FLAGS.get(t_name, '🏳️')
+                t_jump = int(climber['Jump'])
+                t_rank_now = int(climber['Rank_now'])
                 
+                # --- NEW METRIC LAYOUT ---
                 st.metric(
-                    label=f"{t_flag} {t_name}",
-                    value=f"Rank #{int(climber['Rank_now'])}",
-                    delta=f"↑ {int(climber['Jump'])} spots"
+                    label=f"{t_flag} (Climbed {t_jump} spots since 2023)", # The small description text
+                    value=f"{t_name}", # The big white text
+                    delta=f"Rank #{t_rank_now}", # The rank indicator
+                    delta_color="off" # This keeps the rank white rather than green/red
                 )
+                # Add a small line between them for cleaner visual separation
+                st.markdown("---")
+                
         else:
             st.write("Need more tournament years to calculate climbs.")
 
