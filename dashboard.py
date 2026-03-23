@@ -202,23 +202,32 @@ for team, elo in sorted_teams:
 
 df_leaderboard = pd.DataFrame(leaderboard)
 
-# --- 5.6 CALCULATE TOP CLIMBERS (2023 vs 2026) ---
+# --- 5.6 CALCULATE TOP CLIMBERS (Active Teams Only) ---
 years = sorted(df_yearly['Year'].unique())
 top_5_climbers = []
 
 if len(years) >= 2:
-    current_yr = years[-1]   # 2026
-    previous_yr = years[-2]  # 2023
+    current_yr = years[-1]
+    previous_yr = years[-2]
     
-    # Get ranks for both years
-    df_now = df_yearly[df_yearly['Year'] == current_yr][['Team', 'Rank']]
-    df_then = df_yearly[df_yearly['Year'] == previous_yr][['Team', 'Rank']]
+    # 1. Filter df_yearly to only include teams currently considered "Active"
+    # We pull the list of names from your already-filtered leaderboard
+    active_team_names = [t['RawName'] for t in leaderboard]
+    df_active_yearly = df_yearly[df_yearly['Team'].isin(active_team_names)].copy()
     
-    # Merge and calculate the jump
+    # 2. RE-CALCULATE RANKS for those active teams only 
+    # (This ensures Rank #1 in the table matches Rank #1 in the climber logic)
+    df_active_yearly['ActiveRank'] = df_active_yearly.groupby('Year')['Elo'].rank(ascending=False, method='min')
+    
+    # 3. Get ranks for both years
+    df_now = df_active_yearly[df_active_yearly['Year'] == current_yr][['Team', 'ActiveRank']]
+    df_then = df_active_yearly[df_active_yearly['Year'] == previous_yr][['Team', 'ActiveRank']]
+    
+    # 4. Merge and calculate the jump
     df_climb = pd.merge(df_now, df_then, on='Team', suffixes=('_now', '_then'))
-    df_climb['Jump'] = df_climb['Rank_then'] - df_climb['Rank_now']
+    df_climb['Jump'] = df_climb['ActiveRank_then'] - df_climb['ActiveRank_now']
     
-    # Sort by the biggest jump and take top 5
+    # 5. Sort by the biggest jump
     top_5_climbers = df_climb.sort_values(by='Jump', ascending=False).head(5).to_dict('records')
 
 # --- 6. MAIN INTERFACE (TABS) ---
@@ -243,7 +252,7 @@ with tab_rank:
     
     with col_metrics:
     # Adding a header emoji is good for a climbers list
-        st.subheader("🚀 Top 5 Climbers (2023-2026)")
+        st.subheader("🚀 Top 5 Climbers")
         
         if top_5_climbers:
             for climber in top_5_climbers:
@@ -257,7 +266,7 @@ with tab_rank:
                     label=f"{t_flag} (Climbed {t_jump} spots since 2023)", # The small description text
                     value=f"{t_name}", # The big white text
                     delta=f"Rank #{t_rank_now}", # The rank indicator
-                    delta_color="off" # This keeps the rank white rather than green/red
+                    delta_color="normal" # This keeps the rank white rather than green/red
                 )
                 # Add a small line between them for cleaner visual separation
                 st.markdown("---")
