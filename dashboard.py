@@ -62,7 +62,7 @@ FLAGS = {
     'Vietnam': '🇻🇳', 'Singapore': '🇸🇬', 'Philippines': '🇵🇭', 'Indonesia': '🇮🇩',
     'Malaysia': '🇲🇾', 'Costa Rica': '🇨🇷', 'Benelux': '🇧🇪🇳🇱', 'Baltic & Caspian': '🌊',
     'Argentina': '🇦🇷', 'Peru': '🇵🇪','Turkey': '🇹🇷','Taiwan': '🇹🇼','Pakistan': '🇵🇰','Honduras': '🇭🇳',
-    'Panama': '🇵🇦', 'Paraguay': '🇵🇾'
+    'Panama': '🇵🇦', 'Paraguay': '🇵🇾','Latvia': '🇱🇻','Slovenia': '🇸🇮','Slovakia': '🇸🇰','Serbia': '🇷🇸'
 }
 
 # --- 3. DATA PROCESSING ENGINE ---
