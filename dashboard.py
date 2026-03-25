@@ -65,6 +65,14 @@ FLAGS = {
     'Panama': '🇵🇦', 'Paraguay': '🇵🇾','Latvia': '🇱🇻','Slovenia': '🇸🇮','Slovakia': '🇸🇰','Serbia': '🇷🇸'
 }
 
+REGIONS = {
+    'Americas': ['United States', 'Canada', 'Brazil', 'Chile', 'Colombia', 'Mexico', 'Argentina', 'Peru', 'Guatemala', 'Puerto Rico', 'Ecuador', 'Costa Rica', 'Panama', 'Paraguay', 'Uruguay', 'Venezuela' 'Honduras', 'El Salvador'],
+    'EMEA': ['Saudi Arabia', 'Finland', 'United Kingdom', 'Denmark', 'Norway', 'France', 'Spain', 'Russia', 'Sweden', 'Iceland', 'Germany', 'Italy', 'Switzerland','Ireland','Poland','South Africa','Greece','Croatia','Portugal','Ukraine','Czech Republic','Austria','Serbia','Bulgaria','Hungary','Romania'],
+    'APAC': ['South Korea', 'China', 'Japan', 'Thailand', 'Hong Kong', 'Vietnam', 'Singapore', 'Philippines', 'Indonesia', 'Malaysia', 'Taiwan', 'Pakistan', 'Australia', 'New Zealand', 'India']
+}
+
+TEAM_TO_REGION = {team: region for region, teams in REGIONS.items() for team in teams}
+
 # --- 3. DATA PROCESSING ENGINE ---
 @st.cache_data
 def calculate_elo_data():
@@ -159,6 +167,11 @@ ratings, stats, last_active, df_history, latest_date, team_form = calculate_elo_
 # --- 4. SIDEBAR SETTINGS ---
 st.sidebar.header("Dashboard Settings")
 show_inactive = st.sidebar.checkbox("Show Inactive Teams", value=False, help="Show teams that haven't played in 2+ years")
+regions_list = ['Americas','EMEA','APAC']
+selected_region = st.sidebar.multiselect(
+    "Filter by Region",
+    options=regions_list,
+    default=regions_list)
 all_teams = sorted(list(ratings.keys()))
 selected_teams = st.sidebar.multiselect("Graph: Select Specific Teams", all_teams)
 
@@ -193,6 +206,7 @@ for team, elo in sorted_teams:
             "Rank": rank_counter,
             "Team": f"{FLAGS.get(team, '🏳️')} {team}",
             "RawName": team,
+            "Region": TEAM_TO_REGION.get(team, 'Unknown'),
             "ELO": round(float(elo), 1),
             "Form": form_string,
             "W": stats[team]['W'], "L": stats[team]['L'], 
@@ -201,6 +215,10 @@ for team, elo in sorted_teams:
         rank_counter += 1
 
 df_leaderboard = pd.DataFrame(leaderboard)
+
+df_leaderboard['Region'] = df_leaderboard['RawName'].map(TEAM_TO_REGION).fillna('Unknown')
+
+df_filtered = df_leaderboard[df_leaderboard['Region'].isin(selected_region)]
 
 # --- 5.6 CALCULATE TOP CLIMBERS (Active Teams Only) ---
 years = sorted(df_yearly['Year'].unique())
@@ -245,6 +263,7 @@ with tab_rank:
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="auto"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
+                "Region": st.column_config.TextColumn("Region", width="auto"),
                 "Form": st.column_config.TextColumn("Last 5 Results", help="🟢=Win, 🔴=Loss, ⚪=Draw, latest match on the right",width="auto"),
                 "RawName": None # Hide helper column
             }
