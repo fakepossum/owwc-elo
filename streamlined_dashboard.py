@@ -89,7 +89,7 @@ def calculate_elo_data():
         elo_history.append({"Date": match_date, "Team": t1, "Elo": ratings[t1]})
         elo_history.append({"Date": match_date, "Team": t2, "Elo": ratings[t2]})
 
-    return ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max(), team_form
+    return df, ratings, stats, last_active, pd.DataFrame(elo_history), df['Date'].max(), team_form
 
 
 def prepare_dashboard_data(ratings, stats, last_active, df_history, latest_date, team_form, show_inactive, selected_region):
@@ -242,7 +242,7 @@ def main():
     st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
 
     # 1. Fetch Backend Data
-    ratings, stats, last_active, df_history, latest_date, team_form = calculate_elo_data()
+    df, ratings, stats, last_active, df_history, latest_date, team_form = calculate_elo_data()
     all_teams = sorted(list(ratings.keys()))
 
     # 2. Render Sidebar
@@ -254,7 +254,7 @@ def main():
     )
 
     # 4. Render Main Interface
-    tab_rank, tab_predict, tab_graph = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History"])
+    tab_rank, tab_predict, tab_graph, tab_recent = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History", "📅 Recent & Upcoming"])
     
     with tab_rank:
         render_rankings_tab(df_filtered, top_5_climbers)
@@ -262,6 +262,54 @@ def main():
         render_predictor_tab(ratings, all_teams)
     with tab_graph:
         render_graph_tab(df_yearly, df_filtered, selected_teams)
+    with tab_recent:
+        st.subheader("📅 EMEA Conference Cup Countdown")
+        st.info("The EMEA Conference Cup is set to kick off on **April 17th**! Stay tuned for updates and analysis as the tournament unfolds.")
+
+        target_date = datetime.datetime(2026, 4, 17, 17, 0, 0, tzinfo=datetime.timezone.utc)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        timediff = target_date - now
+
+        if timediff.total_seconds() > 0:
+            days = timediff.days
+            hours, remainder = divmod(timediff.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            # Displaying the countdown in high-visibility columns
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Days", days)
+            c2.metric("Hours", hours)
+            c3.metric("Minutes", minutes)
+            c4.metric("Seconds", seconds)
+            st.caption(f"Target: April 17th, 17:00 GMT")
+        else:
+            st.success("🎉 The Qualifiers are LIVE!")
+
+        st.divider()
+
+        # --- RECENT RESULTS SECTION ---
+        st.subheader("📝 Latest Match Results")
+        
+        # We take the raw dataframe 'df' from your calculate_elo_data function
+        # 'df' is already sorted by date in your function, so we just reverse it.
+        recent_matches = df.sort_values('Date', ascending=False).head(15).copy()
+        
+        # Clean up the display names using your TEAM_NAMES mapping
+        recent_matches['TeamA'] = recent_matches['TeamA'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
+        recent_matches['TeamB'] = recent_matches['TeamB'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
+        
+        st.dataframe(
+            recent_matches[['Date', 'TeamA', 'ScoreA', 'ScoreB', 'TeamB']],
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Date": st.column_config.DateColumn("Date", format="DD/MM/YYYY"),
+                "ScoreA": st.column_config.NumberColumn("PTS", width="small"),
+                "ScoreB": st.column_config.NumberColumn("PTS", width="small"),
+                "TeamA": "Home Team",
+                "TeamB": "Away Team"
+            }
+        )
 
 # Start the application
 if __name__ == "__main__":
