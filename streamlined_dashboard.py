@@ -9,7 +9,7 @@ import json
 # Tip for the future: Move these dictionaries to a separate 'config.json' file.
 # ==========================================
 BASE_ELO = 1500
-K = 24
+K = 32
 REVERSION_FACTOR = 0.85
 HIATUS_REVERSION = 0.7
 
