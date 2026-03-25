@@ -206,8 +206,8 @@ for team, elo in sorted_teams:
             "Rank": rank_counter,
             "Team": f"{FLAGS.get(team, '🏳️')} {team}",
             "RawName": team,
-            "Region": TEAM_TO_REGION.get(team, 'Unknown'),
             "ELO": round(float(elo), 1),
+            "Region": TEAM_TO_REGION.get(team, 'Unknown'),
             "Form": form_string,
             "W": stats[team]['W'], "L": stats[team]['L'], 
             "D": stats[team]['D'], "GP": stats[team]['GP']
