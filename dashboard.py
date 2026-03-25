@@ -8,7 +8,7 @@ st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wi
 
 # --- 2. CONSTANTS & MAPPINGS ---
 BASE_ELO = 1500
-K = 32
+K = 30
 REVERSION_FACTOR = 0.85
 HIATUS_REVERSION = 0.7
 
