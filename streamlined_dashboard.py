@@ -263,53 +263,54 @@ def main():
     with tab_graph:
         render_graph_tab(df_yearly, df_filtered, selected_teams)
     with tab_recent:
-        st.subheader("📅 EMEA Conference Cup Countdown")
-        st.info("The EMEA Conference Cup is set to kick off on **April 17th**! Stay tuned for updates and analysis as the tournament unfolds.")
+        # --- 1. COUNTDOWN SECTION (Centered) ---
+        count_spacer_l, count_content, count_spacer_r = st.columns([1, 2, 1])
+        
+        with count_content:
+            st.subheader("🚀 Next Qualifiers Countdown")
+            target_date = datetime.datetime(2026, 4, 17, 17, 0, 0, tzinfo=datetime.timezone.utc)
+            now = datetime.datetime.now(datetime.timezone.utc)
+            time_diff = target_date - now
 
-        target_date = datetime.datetime(2026, 4, 17, 17, 0, 0, tzinfo=datetime.timezone.utc)
-        now = datetime.datetime.now(datetime.timezone.utc)
-        timediff = target_date - now
+            if time_diff.total_seconds() > 0:
+                days = time_diff.days
+                hours, remainder = divmod(time_diff.seconds, 3600)
+                minutes, seconds = divmod(remainder, 60)
 
-        if timediff.total_seconds() > 0:
-            days = timediff.days
-            hours, remainder = divmod(timediff.seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-
-            # Displaying the countdown in high-visibility columns
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Days", days)
-            c2.metric("Hours", hours)
-            c3.metric("Minutes", minutes)
-            c4.metric("Seconds", seconds)
-            st.caption(f"Target: April 17th, 17:00 GMT")
-        else:
-            st.success("🎉 The Qualifiers are LIVE!")
-
+                c1, c2, c3, c4 = st.columns(4)
+                c1.metric("Days", days)
+                c2.metric("Hours", hours)
+                c3.metric("Minutes", minutes)
+                c4.metric("Seconds", seconds)
+            else:
+                st.success("🎉 The Qualifiers are LIVE!")
+        
         st.divider()
 
-        # --- RECENT RESULTS SECTION ---
+        # --- 2. RECENT RESULTS SECTION (Narrower for Readability) ---
         st.subheader("📝 Latest Match Results")
         
-        # We take the raw dataframe 'df' from your calculate_elo_data function
-        # 'df' is already sorted by date in your function, so we just reverse it.
-        recent_matches = df.sort_values('Date', ascending=False).head(15).copy()
-        
-        # Clean up the display names using your TEAM_NAMES mapping
-        recent_matches['TeamA'] = recent_matches['TeamA'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
-        recent_matches['TeamB'] = recent_matches['TeamB'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
-        
-        st.dataframe(
-            recent_matches[['Date', 'TeamA', 'ScoreA', 'ScoreB', 'TeamB']],
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Date": st.column_config.DateColumn("Date", format="DD MMM YYYY"),
-                "ScoreA": st.column_config.NumberColumn("Maps", width="small"),
-                "ScoreB": st.column_config.NumberColumn("Maps", width="small"),
-                "TeamA": "Home Team",
-                "TeamB": "Away Team"
-            }
-        )
+        spacer_left, table_body, spacer_right = st.columns([0.5, 3, 0.5])
+
+        with table_body:
+            recent_matches = df.sort_values('Date', ascending=False).head(15).copy()
+            
+            # Mapping flags and names
+            recent_matches['TeamA'] = recent_matches['TeamA'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
+            recent_matches['TeamB'] = recent_matches['TeamB'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
+            
+            st.dataframe(
+                recent_matches[['Date', 'TeamA', 'ScoreA', 'ScoreB', 'TeamB']],
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Date": st.column_config.DateColumn("Date", format="DD/MM/YYYY", width="small"),
+                    "ScoreA": st.column_config.NumberColumn(" ", width="small"), # Score columns narrowed
+                    "ScoreB": st.column_config.NumberColumn(" ", width="small"), # Space used as header to save room
+                    "TeamA": st.column_config.TextColumn("Home Team", width="medium"),
+                    "TeamB": st.column_config.TextColumn("Away Team", width="medium")
+                }
+            )
 
 # Start the application
 if __name__ == "__main__":
