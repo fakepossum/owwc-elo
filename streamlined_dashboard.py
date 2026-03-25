@@ -290,7 +290,7 @@ def main():
         # --- 2. RECENT RESULTS SECTION (Narrower for Readability) ---
         st.subheader("📝 Latest Match Results")
         
-        spacer_left, table_body, spacer_right = st.columns([0.5, 3, 0.5])
+        spacer_left, table_body, spacer_right = st.columns([1, 2, 1])
 
         with table_body:
             recent_matches = df.sort_values('Date', ascending=False).head(15).copy()
