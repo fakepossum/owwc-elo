@@ -19,6 +19,7 @@ with open('config.json', 'r', encoding='utf-8') as file:
 TEAM_NAMES = config_data['TEAM_NAMES']
 FLAGS = config_data['FLAGS']
 REGIONS = config_data['REGIONS']
+TEAM_COLOURS = config_data['TEAM_COLOURS',{}]
 
 TEAM_TO_REGION = {team: region for region, teams in REGIONS.items() for team in teams}
 
@@ -218,12 +219,15 @@ def render_graph_tab(df_yearly, df_filtered, selected_teams):
     graph_rank_df = df_yearly[df_yearly['Team'].isin(display_teams)]
 
     if not graph_rank_df.empty:
+        teams_in_chart = graph_rank_df['Team'].unique()
+        colour_range = [TEAM_COLOURS.get(team, "#888888") for team in teams_in_chart]
+
         selection = alt.selection_point(fields=['Team'], bind='legend')
 
         rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='linear', strokeWidth=4).encode(
             x=alt.X('Year:O', title='Tournament Year'),
             y=alt.Y('Rank:Q', scale=alt.Scale(domain=[1, 20], reverse=True), title='World Ranking Position'),
-            color=alt.Color('Team:N', title='Click Legend to Highlight'),
+            color=alt.Color('Team:N', title='Click Legend to Highlight',scale=alt.Scale(domain=list(teams_in_chart), range=colour_range)),
             opacity=alt.condition(selection, alt.value(1.0), alt.value(0.1)),
             tooltip=['Year', 'Team', 'Rank', 'Elo']
         ).add_params(selection).properties(height=500).interactive()
