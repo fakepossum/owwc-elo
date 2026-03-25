@@ -40,12 +40,12 @@
     "APAC": ["South Korea", "China", "Japan", "Thailand", "Hong Kong", "Vietnam", "Singapore", "Philippines", "Indonesia", "Malaysia", "Taiwan", "Pakistan", "Australia", "New Zealand", "India"]
   },
   "TEAM_COLOURS": {
-  "South Korea": "#609DF7",
+  "South Korea": "#DBDBDB",
   "Saudi Arabia": "#014F27",
   "China": "#DE2910",
   "United States": "#0A3161",
   "Finland": "#003580",
-  "United Kingdom": "#B22234",
+  "United Kingdom": "#85DAFF",
   "Canada": "#FF0000",
   "France": "#002395",
   "Japan": "#BC002D",
