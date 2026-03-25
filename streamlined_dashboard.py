@@ -220,7 +220,7 @@ def render_graph_tab(df_yearly, df_filtered, selected_teams):
     if not graph_rank_df.empty:
         selection = alt.selection_point(fields=['Team'], bind='legend')
 
-        rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='monotone', strokeWidth=4).encode(
+        rank_chart = alt.Chart(graph_rank_df).mark_line(point=True, interpolate='linear', strokeWidth=4).encode(
             x=alt.X('Year:O', title='Tournament Year'),
             y=alt.Y('Rank:Q', scale=alt.Scale(domain=[1, 20], reverse=True), title='World Ranking Position'),
             color=alt.Color('Team:N', title='Click Legend to Highlight'),
@@ -254,7 +254,7 @@ def main():
     )
 
     # 4. Render Main Interface
-    tab_rank, tab_predict, tab_graph, tab_recent = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 Elo History", "📅 Recent & Upcoming"])
+    tab_rank, tab_predict, tab_graph, tab_recent = st.tabs(["🏆 Rankings", "⚔️ Match Predictor", "📈 ELO History", "📅 Recent & Upcoming"])
     
     with tab_rank:
         render_rankings_tab(df_filtered, top_5_climbers)
