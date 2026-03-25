@@ -167,7 +167,7 @@ def render_rankings_tab(df_filtered, top_5_climbers):
         st.subheader("Global Leaderboard")
         st.dataframe(
             df_filtered,
-            use_container_width=True, hide_index=True,
+            use_container_width=True, hide_index=True, height=1000,
             column_config={
                 "ELO": st.column_config.NumberColumn("ELO", format="%.1f", width="auto"),
                 "Team": st.column_config.TextColumn("Team", width="auto"),
