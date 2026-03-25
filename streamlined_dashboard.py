@@ -293,22 +293,43 @@ def main():
         spacer_left, table_body, spacer_right = st.columns([1, 3, 1])
 
         with table_body:
+            # 1. Prepare the data
             recent_matches = df.sort_values('Date', ascending=False).head(15).copy()
             
-            # Mapping flags and names
+            # Clean names and flags
             recent_matches['TeamA'] = recent_matches['TeamA'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
             recent_matches['TeamB'] = recent_matches['TeamB'].apply(lambda x: f"{FLAGS.get(TEAM_NAMES.get(x.strip(), x.strip()), '🏳️')} {TEAM_NAMES.get(x.strip(), x.strip())}")
             
+            # 2. Define the Highlighting Function
+            def highlight_winner(row):
+                # Default styles (no background)
+                style_a = ''
+                style_b = ''
+                
+                if row['ScoreA'] > row['ScoreB']:
+                    style_a = 'background-color: rgba(0, 255, 0, 0.2); font-weight: bold;' # Light Green
+                elif row['ScoreB'] > row['ScoreA']:
+                    style_b = 'background-color: rgba(0, 255, 0, 0.2); font-weight: bold;' # Light Green
+                    
+                return [None, style_a, None, None, style_b] # Mapping styles to columns: Date, TeamA, ScoreA, ScoreB, TeamB
+
+            # 3. Apply Styling and Display
+            # We select only the columns we want to display before styling
+            display_df = recent_matches[['Date', 'TeamA', 'ScoreA', 'ScoreB', 'TeamB']]
+            
+            # Apply the style row-by-row
+            styled_df = display_df.style.apply(highlight_winner, axis=1)
+
             st.dataframe(
-                recent_matches[['Date', 'TeamA', 'ScoreA', 'ScoreB', 'TeamB']],
+                styled_df,
                 use_container_width=True,
                 hide_index=True,
                 column_config={
-                    "Date": st.column_config.DateColumn("Date", format="DD/MM/YYYY", width="small"),
-                    "ScoreA": st.column_config.NumberColumn(" ", width="small"), # Score columns narrowed
-                    "ScoreB": st.column_config.NumberColumn(" ", width="small"), # Space used as header to save room
-                    "TeamA": st.column_config.TextColumn("Home Team", width="medium"),
-                    "TeamB": st.column_config.TextColumn("Away Team", width="medium")
+                    "Date": st.column_config.DateColumn("Date", format="DD/MM/YYYY"),
+                    "TeamA": st.column_config.TextColumn("Home Team"),
+                    "TeamB": st.column_config.TextColumn("Away Team"),
+                    "ScoreA": st.column_config.NumberColumn(" ", width="small"),
+                    "ScoreB": st.column_config.NumberColumn(" ", width="small")
                 }
             )
 
