@@ -303,9 +303,9 @@ def main():
             use_container_width=True,
             hide_index=True,
             column_config={
-                "Date": st.column_config.DateColumn("Date", format="DD/MM/YYYY"),
-                "ScoreA": st.column_config.NumberColumn("PTS", width="small"),
-                "ScoreB": st.column_config.NumberColumn("PTS", width="small"),
+                "Date": st.column_config.DateColumn("Date", format="DD MMM YYYY"),
+                "ScoreA": st.column_config.NumberColumn("Maps", width="small"),
+                "ScoreB": st.column_config.NumberColumn("Maps", width="small"),
                 "TeamA": "Home Team",
                 "TeamB": "Away Team"
             }
