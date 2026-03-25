@@ -2,74 +2,23 @@ import streamlit as st
 import pandas as pd
 import datetime
 import altair as alt
+import json
 
 # 1. Page Configuration
 st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
 
-# --- 2. CONSTANTS & MAPPINGS ---
+# --- 2. CONSTANTS & UPDATED JSON MAPPINGS ---
 BASE_ELO = 1500
 K = 32
 REVERSION_FACTOR = 0.85
 HIATUS_REVERSION = 0.7
 
-# Normalize 3-letter codes and common variations to full names
-TEAM_NAMES = {
-    'KSA': 'Saudi Arabia', 'KOR': 'South Korea', 'USA': 'United States',
-    'CHN': 'China', 'FIN': 'Finland', 'GBR': 'United Kingdom',
-    'CAN': 'Canada', 'FRA': 'France', 'JPN': 'Japan',
-    'THA': 'Thailand', 'AUS': 'Australia', 'ESP': 'Spain',
-    'COL': 'Colombia', 'DNK': 'Denmark', 'NOR': 'Norway',
-    'RUS': 'Russia', 'SWE': 'Sweden', 'BRA': 'Brazil',
-    'HKG': 'Hong Kong', 'ISL': 'Iceland', 'MEX': 'Mexico',
-    'GTM': 'Guatemala', 'IND': 'India', 'LVA': 'Latvia',
-    'PRY': 'Paraguay', 'PRI': 'Puerto Rico', 'ECU': 'Ecuador',
-    'IRL': 'Ireland', 'POL': 'Poland', 'ZAF': 'South Africa',
-    'BCS': 'Baltic & Caspian', 'DEU': 'Germany', 'FIN': 'Finland',
-    'HUN': 'Hungary', 'ISL': 'Iceland', 'GBR': 'United Kingdom', 
-    'GRC': 'Greece', 'HRV': 'Croatia', 'NOR': 'Norway', 
-    'PRT': 'Portugal', 'FRA': 'France', 'UKR': 'Ukraine', 
-    'SVK': 'Slovakia', 'TUR': 'Turkey', 'ROU': 'Romania',
-    'SWE': 'Sweden', 'DNK': 'Denmark', 'ITA': 'Italy', 
-    'BGR': 'Bulgaria', 'RUS': 'Russia', 'CHE': 'Switzerland',
-    'ISR': 'Israel', 'AUT': 'Austria', 'SRB': 'Serbia', 
-    'CZE': 'Czech Republic', 'BEN': 'Benelux', 'ESP': 'Spain',
-    'USA': 'United States', 'CAN': 'Canada', 'BRA': 'Brazil', 
-    'CHL': 'Chile', 'COL': 'Colombia', 'MEX': 'Mexico', 
-    'ARG': 'Argentina', 'PER': 'Peru','KOR': 'South Korea', 'CHN': 'China', 'TWN': 'Taiwan', 
-    'THA': 'Thailand', 'JPN': 'Japan', 'VNM': 'Vietnam', 
-    'SGP': 'Singapore', 'HKG': 'Hong Kong', 'PHL': 'Philippines',
-    'IDN': 'Indonesia', 'PAK': 'Pakistan', 'MYS': 'Malaysia','CRI': 'Costa Rica',
-    'BEL': 'Belgium','NLD': 'Netherlands','NZL': 'New Zealand',
-    'ROU': 'Romania','KSA': 'Saudi Arabia','PRY': 'Paraguay','IND': 'India',
-    'LVA': 'Latvia','GTM': 'Guatemala','PRI': 'Puerto Rico','ECU': 'Ecuador',
-    'HND': 'Honduras','SLV': 'El Salvador','URY': 'Uruguay','VEN': 'Venezuela'
-}
+with open('config.json', 'r', encoding='utf-8') as file:
+    config_data = json.load(file)
 
-FLAGS = {
-    'Saudi Arabia': '🇸🇦', 'Finland': '🇫🇮', 'South Korea': '🇰🇷',
-    'China': '🇨🇳', 'United States': '🇺🇸', 'United Kingdom': '🇬🇧',
-    'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Australia': '🇦🇺',
-    'Denmark': '🇩🇰', 'Norway': '🇳🇴', 'Japan': '🇯🇵',
-    'France': '🇫🇷', 'Thailand': '🇹🇭', 'Spain': '🇪🇸',
-    'Russia': '🇷🇺', 'Sweden': '🇸🇪', 'Brazil': '🇧🇷',
-    'Hong Kong': '🇭🇰', 'Iceland': '🇮🇸', 'Mexico': '🇲🇽', 'Chile': '🇨🇱',
-    'Colombia': '🇨🇴', 'Guatemala': '🇬🇹', 'India': '🇮🇳', 'Netherlands': '🇳🇱',
-    'Paraguay': '🇵🇾', 'Puerto Rico': '🇵🇷', 'Ecuador': '🇪🇨', 'Belgium': '🇧🇪',
-    'Germany': '🇩🇪', 'Italy': '🇮🇹', 'Switzerland': '🇨🇭', 'New Zealand': '🇳🇿',
-    'Ireland': '🇮🇪', 'Poland': '🇵🇱', 'South Africa': '🇿🇦', 'Greece': '🇬🇷',
-    'Croatia': '🇭🇷', 'Portugal': '🇵🇹', 'Ukraine': '🇺🇦','Czech Republic': '🇨🇿',
-    'Austria': '🇦🇹', 'Serbia': '🇷🇸', 'Bulgaria': '🇧🇬','Hungary': '🇭🇺','Romania': '🇷🇴',
-    'Vietnam': '🇻🇳', 'Singapore': '🇸🇬', 'Philippines': '🇵🇭', 'Indonesia': '🇮🇩',
-    'Malaysia': '🇲🇾', 'Costa Rica': '🇨🇷', 'Benelux': '🇧🇪🇳🇱', 'Baltic & Caspian': '🌊',
-    'Argentina': '🇦🇷', 'Peru': '🇵🇪','Turkey': '🇹🇷','Taiwan': '🇹🇼','Pakistan': '🇵🇰','Honduras': '🇭🇳',
-    'Panama': '🇵🇦', 'Paraguay': '🇵🇾','Latvia': '🇱🇻','Slovenia': '🇸🇮','Slovakia': '🇸🇰','Serbia': '🇷🇸'
-}
-
-REGIONS = {
-    'Americas': ['United States', 'Canada', 'Brazil', 'Chile', 'Colombia', 'Mexico', 'Argentina', 'Peru', 'Guatemala', 'Puerto Rico', 'Ecuador', 'Costa Rica', 'Panama', 'Paraguay', 'Uruguay', 'Venezuela' 'Honduras', 'El Salvador'],
-    'EMEA': ['Saudi Arabia', 'Finland', 'United Kingdom', 'Denmark', 'Norway', 'France', 'Spain', 'Russia', 'Sweden', 'Iceland', 'Germany', 'Italy', 'Switzerland','Ireland','Poland','South Africa','Greece','Croatia','Portugal','Ukraine','Czech Republic','Austria','Serbia','Bulgaria','Hungary','Romania','Turkey','Slovenia','Slovakia','Netherlands'],
-    'APAC': ['South Korea', 'China', 'Japan', 'Thailand', 'Hong Kong', 'Vietnam', 'Singapore', 'Philippines', 'Indonesia', 'Malaysia', 'Taiwan', 'Pakistan', 'Australia', 'New Zealand', 'India']
-}
+TEAM_NAMES = config_data['TEAM_NAMES']
+FLAGS = config_data['FLAGS']
+REGIONS = config_data['REGIONS']
 
 TEAM_TO_REGION = {team: region for region, teams in REGIONS.items() for team in teams}
 

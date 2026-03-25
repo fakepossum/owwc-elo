@@ -1,0 +1,42 @@
+{
+  "TEAM_NAMES": {
+    "KSA": "Saudi Arabia", "KOR": "South Korea", "USA": "United States",
+    "CHN": "China", "FIN": "Finland", "GBR": "United Kingdom",
+    "CAN": "Canada", "FRA": "France", "JPN": "Japan", "THA": "Thailand", 
+    "AUS": "Australia", "ESP": "Spain", "COL": "Colombia", "DNK": "Denmark", 
+    "NOR": "Norway", "RUS": "Russia", "SWE": "Sweden", "BRA": "Brazil",
+    "HKG": "Hong Kong", "ISL": "Iceland", "MEX": "Mexico", "GTM": "Guatemala", 
+    "IND": "India", "LVA": "Latvia", "PRY": "Paraguay", "PRI": "Puerto Rico", 
+    "ECU": "Ecuador", "IRL": "Ireland", "POL": "Poland", "ZAF": "South Africa",
+    "BCS": "Baltic & Caspian", "DEU": "Germany", "HUN": "Hungary", "GRC": "Greece", 
+    "HRV": "Croatia", "PRT": "Portugal", "UKR": "Ukraine", "SVK": "Slovakia", 
+    "TUR": "Turkey", "ROU": "Romania", "ITA": "Italy", "BGR": "Bulgaria", 
+    "CHE": "Switzerland", "ISR": "Israel", "AUT": "Austria", "SRB": "Serbia", 
+    "CZE": "Czech Republic", "BEN": "Benelux", "CHL": "Chile", "ARG": "Argentina", 
+    "PER": "Peru", "TWN": "Taiwan", "VNM": "Vietnam", "SGP": "Singapore", 
+    "PHL": "Philippines", "IDN": "Indonesia", "PAK": "Pakistan", "MYS": "Malaysia",
+    "CRI": "Costa Rica", "BEL": "Belgium", "NLD": "Netherlands", "NZL": "New Zealand",
+    "HND": "Honduras", "SLV": "El Salvador", "URY": "Uruguay", "VEN": "Venezuela"
+  },
+  "FLAGS": {
+    "Saudi Arabia": "🇸🇦", "Finland": "🇫🇮", "South Korea": "🇰🇷", "China": "🇨🇳", 
+    "United States": "🇺🇸", "United Kingdom": "🇬🇧", "Canada": "🇨🇦", "Colombia": "🇨🇴", 
+    "Australia": "🇦🇺", "Denmark": "🇩🇰", "Norway": "🇳🇴", "Japan": "🇯🇵", "France": "🇫🇷", 
+    "Thailand": "🇹🇭", "Spain": "🇪🇸", "Russia": "🇷🇺", "Sweden": "🇸🇪", "Brazil": "🇧🇷",
+    "Hong Kong": "🇭🇰", "Iceland": "🇮🇸", "Mexico": "🇲🇽", "Chile": "🇨🇱", "Guatemala": "🇬🇹", 
+    "India": "🇮🇳", "Netherlands": "🇳🇱", "Paraguay": "🇵🇾", "Puerto Rico": "🇵🇷", "Ecuador": "🇪🇨", 
+    "Belgium": "🇧🇪", "Germany": "🇩🇪", "Italy": "🇮🇹", "Switzerland": "🇨🇭", "New Zealand": "🇳🇿",
+    "Ireland": "🇮🇪", "Poland": "🇵🇱", "South Africa": "🇿🇦", "Greece": "🇬🇷", "Croatia": "🇭🇷", 
+    "Portugal": "🇵🇹", "Ukraine": "🇺🇦","Czech Republic": "🇨🇿", "Austria": "🇦🇹", "Serbia": "🇷🇸", 
+    "Bulgaria": "🇧🇬","Hungary": "🇭🇺","Romania": "🇷🇴", "Vietnam": "🇻🇳", "Singapore": "🇸🇬", 
+    "Philippines": "🇵🇭", "Indonesia": "🇮🇩", "Malaysia": "🇲🇾","Costa Rica": "🇨🇷", 
+   "Benelux": "🇧🇪🇳🇱","Baltic & Caspian":"🌊","Argentina":"🇦🇷","Peru":"🇵🇪",
+   "Turkey":"🇹🇷","Taiwan":"🇹🇼","Pakistan":"🇵🇰","Honduras":"🇭🇳","Panama":"🇵🇦",
+   "Latvia":"🇱🇻","Slovenia":"🇸🇮","Slovakia":"🇸🇰"
+  },
+  "REGIONS": {
+    "Americas": ["United States", "Canada", "Brazil", "Chile", "Colombia", "Mexico", "Argentina", "Peru", "Guatemala", "Puerto Rico", "Ecuador", "Costa Rica", "Panama", "Paraguay", "Uruguay", "Venezuela", "Honduras", "El Salvador"],
+    "EMEA": ["Saudi Arabia", "Finland", "United Kingdom", "Denmark", "Norway", "France", "Spain", "Russia", "Sweden", "Iceland", "Germany", "Italy", "Switzerland", "Ireland", "Poland", "South Africa", "Greece", "Croatia", "Portugal", "Ukraine", "Czech Republic", "Austria", "Serbia", "Bulgaria", "Hungary", "Romania", "Turkey", "Slovenia", "Slovakia", "Netherlands"],
+    "APAC": ["South Korea", "China", "Japan", "Thailand", "Hong Kong", "Vietnam", "Singapore", "Philippines", "Indonesia", "Malaysia", "Taiwan", "Pakistan", "Australia", "New Zealand", "India"]
+  }
+}
