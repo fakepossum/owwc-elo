@@ -153,7 +153,7 @@ def prepare_dashboard_data(ratings, stats, last_active, df_history, latest_date,
 def render_sidebar(all_teams):
     st.sidebar.header("Dashboard Settings")
     show_inactive = st.sidebar.checkbox("Show Inactive Teams", value=False, help="Show teams that haven't played in 2+ years")
-    regions_list = ['Americas', 'EMEA', 'APAC']
+    regions_list = ['Americas', 'EMEA', 'APAC','Unknown']
     selected_region = st.sidebar.multiselect("Filter by Region", options=regions_list, default=regions_list)
     selected_teams = st.sidebar.multiselect("Graph: Select Specific Teams", all_teams)
     
