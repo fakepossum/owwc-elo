@@ -67,7 +67,7 @@ FLAGS = {
 
 REGIONS = {
     'Americas': ['United States', 'Canada', 'Brazil', 'Chile', 'Colombia', 'Mexico', 'Argentina', 'Peru', 'Guatemala', 'Puerto Rico', 'Ecuador', 'Costa Rica', 'Panama', 'Paraguay', 'Uruguay', 'Venezuela' 'Honduras', 'El Salvador'],
-    'EMEA': ['Saudi Arabia', 'Finland', 'United Kingdom', 'Denmark', 'Norway', 'France', 'Spain', 'Russia', 'Sweden', 'Iceland', 'Germany', 'Italy', 'Switzerland','Ireland','Poland','South Africa','Greece','Croatia','Portugal','Ukraine','Czech Republic','Austria','Serbia','Bulgaria','Hungary','Romania'],
+    'EMEA': ['Saudi Arabia', 'Finland', 'United Kingdom', 'Denmark', 'Norway', 'France', 'Spain', 'Russia', 'Sweden', 'Iceland', 'Germany', 'Italy', 'Switzerland','Ireland','Poland','South Africa','Greece','Croatia','Portugal','Ukraine','Czech Republic','Austria','Serbia','Bulgaria','Hungary','Romania','Turkey','Slovenia','Slovakia','Netherlands'],
     'APAC': ['South Korea', 'China', 'Japan', 'Thailand', 'Hong Kong', 'Vietnam', 'Singapore', 'Philippines', 'Indonesia', 'Malaysia', 'Taiwan', 'Pakistan', 'Australia', 'New Zealand', 'India']
 }
 
@@ -257,7 +257,7 @@ with tab_rank:
     with col_main:
         st.subheader("Global Leaderboard")
         st.dataframe(
-            df_leaderboard,
+            df_filtered,
             use_container_width=True,
             hide_index=True,
             column_config={
@@ -309,8 +309,10 @@ with tab_predict:
 with tab_graph:
     st.subheader("Historical Rank Progression")
     
-    # 1. Determine teams (Default to Top 10)
-    display_teams = selected_teams if selected_teams else [t['RawName'] for t in leaderboard[:10]]
+    # NEW: Default to the Top 10 of the CURRENTLY FILTERED list
+    current_list = df_filtered.to_dict('records')
+    display_teams = selected_teams if selected_teams else [t['RawName'] for t in current_list[:10]]
+    
     graph_rank_df = df_yearly[df_yearly['Team'].isin(display_teams)]
 
     if not graph_rank_df.empty:
