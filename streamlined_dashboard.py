@@ -19,7 +19,7 @@ with open('config.json', 'r', encoding='utf-8') as file:
 TEAM_NAMES = config_data['TEAM_NAMES']
 FLAGS = config_data['FLAGS']
 REGIONS = config_data['REGIONS']
-TEAM_COLOURS = config_data['TEAM_COLOURS',{}]
+TEAM_COLOURS = config_data.get('TEAM_COLOURS', {})
 
 TEAM_TO_REGION = {team: region for region, teams in REGIONS.items() for team in teams}
 
