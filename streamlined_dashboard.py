@@ -271,7 +271,8 @@ def main():
         count_spacer_l, count_content, count_spacer_r = st.columns([1, 2, 1])
         
         with count_content:
-            st.subheader("🚀 Next Qualifiers Countdown")
+            st.subheader("📅 EMEA Conference Cup Qualifiers Countdown")
+            st.info("The EMEA Conference Cup kicks off on **April 17th**! Here's how long until the action begins:")
             target_date = datetime.datetime(2026, 4, 17, 17, 0, 0, tzinfo=datetime.timezone.utc)
             now = datetime.datetime.now(datetime.timezone.utc)
             time_diff = target_date - now
