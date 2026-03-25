@@ -36,7 +36,7 @@
   },
   "REGIONS": {
     "Americas": ["United States", "Canada", "Brazil", "Chile", "Colombia", "Mexico", "Argentina", "Peru", "Guatemala", "Puerto Rico", "Ecuador", "Costa Rica", "Panama", "Paraguay", "Uruguay", "Venezuela", "Honduras", "El Salvador"],
-    "EMEA": ["Saudi Arabia", "Finland", "United Kingdom", "Denmark", "Norway", "France", "Spain", "Russia", "Sweden", "Iceland", "Germany", "Italy", "Switzerland", "Ireland", "Poland", "South Africa", "Greece", "Croatia", "Portugal", "Ukraine", "Czech Republic", "Austria", "Serbia", "Bulgaria", "Hungary", "Romania", "Turkey", "Slovenia", "Slovakia", "Netherlands"],
+    "EMEA": ["Saudi Arabia", "Finland", "United Kingdom", "Denmark", "Norway", "France", "Spain", "Russia", "Sweden", "Iceland", "Germany", "Italy", "Switzerland", "Ireland", "Poland", "South Africa", "Greece", "Croatia", "Portugal", "Ukraine", "Czech Republic", "Austria", "Serbia", "Bulgaria", "Hungary", "Romania", "Turkey", "Slovenia", "Slovakia", "Netherlands", "Benelux", "Baltic & Caspian", "Belgium", "Latvia", "Israel"],
     "APAC": ["South Korea", "China", "Japan", "Thailand", "Hong Kong", "Vietnam", "Singapore", "Philippines", "Indonesia", "Malaysia", "Taiwan", "Pakistan", "Australia", "New Zealand", "India"]
   }
 }
