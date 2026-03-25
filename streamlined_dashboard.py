@@ -243,7 +243,7 @@ def render_graph_tab(df_yearly, df_filtered, selected_teams):
 # ==========================================
 def main():
     # Page Config must be the first Streamlit command
-    st.set_page_config(page_title="OWWC Elo Dashboard", page_icon="🏆", layout="wide")
+    st.set_page_config(page_title="OWWC ELO Dashboard", page_icon="🏆", layout="wide")
 
     # 1. Fetch Backend Data
     df, ratings, stats, last_active, df_history, latest_date, team_form = calculate_elo_data()
