@@ -6,59 +6,26 @@ import pandas as pd
 # --- 1. PASTE YOUR MESSY TEXT BELOW ---
 # You can paste dates, scores, and teams in a "staircase" format here.
 raw_mess = """
-POL
+April 19, 2026
+IRL
 2
 0
+PRT
 
-ZAF
-
-LVA
+AUT
+2
 0
-2
-
-CZE
-
-GRC
-2
-1
-
-BHR
+TUR
 
 IRL
 2
 0
-
-ISL
-
-EST
-2
-0
-
-CHE
-
-BEL
-2
-0
-
-ISR
-
-DEU
-2
-0
-
 AUT
 
-NLD
-0
-2
-
-TUR
-
-ITA
-0
-2
-
 PRT
+2
+1
+TUR
 """ 
 # ---------------------------------------
 
