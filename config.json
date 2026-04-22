@@ -32,7 +32,7 @@
     "Philippines": "🇵🇭", "Indonesia": "🇮🇩", "Malaysia": "🇲🇾","Costa Rica": "🇨🇷", 
    "Benelux": "🇧🇪🇳🇱","Baltic & Caspian":"🌊","Argentina":"🇦🇷","Peru":"🇵🇪",
    "Turkey":"🇹🇷","Taiwan":"🇹🇼","Pakistan":"🇵🇰","Honduras":"🇭🇳","Panama":"🇵🇦",
-   "Latvia":"🇱🇻","Slovenia":"🇸🇮","Slovakia":"🇸🇰"
+   "Latvia":"🇱🇻","Slovenia":"🇸🇮","Slovakia":"🇸🇰","Estonia":"🇪🇪","Bahrain":"🇧🇭"
   },
   "REGIONS": {
     "Americas": ["United States", "Canada", "Brazil", "Chile", "Colombia", "Mexico", "Argentina", "Peru", "Guatemala", "Puerto Rico", "Ecuador", "Costa Rica", "Panama", "Paraguay", "Uruguay", "Venezuela", "Honduras", "El Salvador"],
