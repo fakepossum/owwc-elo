@@ -6,99 +6,59 @@ import pandas as pd
 # --- 1. PASTE YOUR MESSY TEXT BELOW ---
 # You can paste dates, scores, and teams in a "staircase" format here.
 raw_mess = """
-March 14, 2026
+POL
+2
+0
 
-IND
+ZAF
+
+LVA
 0
 2
 
-PHL
+CZE
 
-SGP
-0
-2
-
-NZL
-
-PAK
+GRC
 2
 1
 
-PHL
+BHR
 
-IND
+IRL
 2
 0
 
-MYS
+ISL
 
-IND
+EST
 2
 0
 
-SGP
+CHE
 
-MYS
-0
-2
-
-PHL
-
-MYS
-0
-2
-
-SGP
-
-NZL
-1
-2
-
-PAK
-
-March 15, 2026
-
-NZL
-1
-2
-
-IND
-
-PAK
-2
-1
-
-SGP
-
-NZL
-1
-2
-
-PHL
-
-IND
+BEL
 2
 0
 
-PAK
+ISR
 
-PHL
+DEU
 2
 0
 
-SGP
+AUT
 
-NZL
-2
-1
-
-MYS
-
-MYS
+NLD
 0
 2
 
-PAK
+TUR
+
+ITA
+0
+2
+
+PRT
 """ 
 # ---------------------------------------
 
@@ -114,6 +74,7 @@ TEAM_NAMES = {
     'SWE': 'Sweden', 'DNK': 'Denmark','ITA': 'Italy', 'BGR': 'Bulgaria', 'RUS': 'Russia', 
     'CHE': 'Switzerland', 'ISR': 'Israel', 'AUT': 'Austria', 'SRB': 'Serbia', 
     'CZE': 'Czech Republic', 'BEN': 'Benelux', 'ESP': 'Spain', 'NLD': 'Netherlands', 'BEL': 'Belgium',
+    'LVA': 'Latvia', 'BHR': 'Bahrain', 'EST': 'Estonia',
 
     # Americas
     'USA': 'United States', 'CAN': 'Canada', 'MEX': 'Mexico', 'BRA': 'Brazil', 
